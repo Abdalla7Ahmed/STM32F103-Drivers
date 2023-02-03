@@ -37,8 +37,6 @@ typedef struct
 	uint8_t IRQ_Enable;
 	// Set the c function which will be called once the IRQ happened.
 	void(* P_IRQ_CallBack)(void);
-
-
 }UART_Config;
 
 

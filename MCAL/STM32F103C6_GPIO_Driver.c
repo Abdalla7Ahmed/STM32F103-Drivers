@@ -5,57 +5,57 @@
  *      Author: Abotaleb
  */
 
-#include "../MCAL/Inc/STM32F103C6_GPIO_Driver.h"
+#include "STM32F103C6_Driver.h"
 uint8_t Get_CRLH_position (uint16_t pinNumber)
 {
 	switch(pinNumber)
 	{
-	case GPIO_PIN_0:
+	case GPIO_PINS_0:
 		return 0;
 		break;
-	case GPIO_PIN_1:
+	case GPIO_PINS_1:
 		return 4;
 		break;
-	case GPIO_PIN_2:
+	case GPIO_PINS_2:
 		return 8;
 		break;
-	case GPIO_PIN_3:
+	case GPIO_PINS_3:
 		return 12;
 		break;
-	case GPIO_PIN_4:
+	case GPIO_PINS_4:
 		return 16;
 		break;
-	case GPIO_PIN_5:
+	case GPIO_PINS_5:
 		return 20;
 		break;
-	case GPIO_PIN_6:
+	case GPIO_PINS_6:
 		return 24;
 		break;
-	case GPIO_PIN_7:
+	case GPIO_PINS_7:
 		return 28;
 		break;
-	case GPIO_PIN_8:
+	case GPIO_PINS_8:
 		return 0;
 		break;
-	case GPIO_PIN_9:
+	case GPIO_PINS_9:
 		return 4;
 		break;
-	case GPIO_PIN_10:
+	case GPIO_PINS_10:
 		return 8;
 		break;
-	case GPIO_PIN_11:
+	case GPIO_PINS_11:
 		return 12;
 		break;
-	case GPIO_PIN_12:
+	case GPIO_PINS_12:
 		return 16;
 		break;
-	case GPIO_PIN_13:
+	case GPIO_PINS_13:
 		return 20;
 		break;
-	case GPIO_PIN_14:
+	case GPIO_PINS_14:
 		return 24;
 		break;
-	case GPIO_PIN_15:
+	case GPIO_PINS_15:
 		return 28;
 		break;
 	}
@@ -79,7 +79,7 @@ void MCAL_GPIO_INIT(GPIO_TypeDef *GPIOx,GPIO_PinConfig_t *PinConfig)
 	volatile uint32_t *ConfigRegister = NULL;
 	uint8_t Pin_Config=0;
 	// check for set the pointer to CRL or CRH
-	ConfigRegister = (PinConfig->GPIO_PinNumber < GPIO_PIN_8 ) ? &GPIOx->CRL : &GPIOx->CRH;
+	ConfigRegister = (PinConfig->GPIO_PinNumber < GPIO_PINS_8 ) ? &GPIOx->CRL : &GPIOx->CRH;
 	// clear CNF[1:0] MODE[1:0]
 	(*ConfigRegister) &= ~(0xF<<Get_CRLH_position(PinConfig->GPIO_PinNumber));
 	// if pin is output ?
@@ -120,6 +120,31 @@ void MCAL_GPIO_INIT(GPIO_TypeDef *GPIOx,GPIO_PinConfig_t *PinConfig)
 	(*ConfigRegister) |= Pin_Config <<Get_CRLH_position(PinConfig->GPIO_PinNumber);
 }
 
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+/**================================================================
+ * @Fn		  - MCAL_GPIO_INIT_PORT
+ * @brief 	  - initialization GPIOx  according to the specified parameters in pin configuration
+ * @param[in] - base address of GPIOx : can be (A ..... E depending on device used)
+ * @param[in] - PinConfig pointer to GPIO_PinConfig_t structure that contains
+ * 			   the configuration information for specified GPIO pin
+ * @retval	  - none
+ * Note		  - stm32f103c6 MCU has GPIOz [z one of A ,B , C ,D ,E]
+ * 			   but LQFP48 Package has only GPIOA , GPIOB and Partial of GPIOC , GPIOD
+================================================================**/
+void MCAL_GPIO_INIT_PORT(GPIO_TypeDef *GPIOx,GPIO_PinConfig_t *PortConfig)
+{
+	uint8_t counter ;
+	uint16_t temp=GPIO_PINS_0;
+	GPIO_PinConfig_t Pinconfig;
+	Pinconfig.GPIO_MODE = PortConfig->GPIO_MODE;
+	Pinconfig.GPIO_OUTPUT_SPEED = PortConfig->GPIO_OUTPUT_SPEED;
+
+	for(counter = 0 ; counter <=15 ; counter ++)
+	{
+		Pinconfig.GPIO_PinNumber = temp << counter;
+		MCAL_GPIO_INIT(GPIOx, &Pinconfig);
+	}
+}
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 /**================================================================
  * @Fn		  - MCAL_GPIO_DEINIT
@@ -175,8 +200,8 @@ void MCAL_GPIO_DEINIT(GPIO_TypeDef *GPIOx)
  * @Fn		  - MCAL_GPIO_READ_PIN
  * @brief 	  - Read specified pin
  * @param[in] - base address of GPIOx : can be (A ..... E depending on device used)
- * @param[in] - pin number set by @ref GPIO_PINS_define
- * @retval	  - the input pin value according to @ref GPIO_PIN_state
+ * @param[in] - pin number set by @ref GPIO_PINS_define (topic 2)
+ * @retval	  - the input pin value according to @ref GPIO_PIN_state (topic 5)
  * Note		  - none
 ================================================================**/
 uint8_t MCAL_GPIO_READ_PIN(GPIO_TypeDef *GPIOx,uint16_t PinNumber)
@@ -211,7 +236,7 @@ uint16_t MCAL_GPIO_READ_PORT(GPIO_TypeDef *GPIOx)
  * @Fn		  - MCAL_GPIO_WRITE_PIN
  * @brief 	  - write specified pin on GPIOx :can be (A ..... E depending on device used)
  * @param[in] - base address of GPIOx :can be (A ..... E depending on device used)
- * @param[in] - pin number set by @ref GPIO_PINS_define
+ * @param[in] - pin number set by @ref GPIO_PINS_define (tpoic 2)
  * @param[in] - pin value
  * @retval	  - none
  * Note		  - none
@@ -246,6 +271,7 @@ void MCAL_GPIO_WRITE_PIN(GPIO_TypeDef *GPIOx,uint16_t PinNumber,uint8_t PinValue
  * @brief 	  - write specified GPIOx :can be (A ..... E depending on device used)
  * @param[in] - base address of GPIOx :can be (A ..... E depending on device used)
  * @param[in] - port value
+ * @param[in] - speed value
  * @retval	  - none
  * Note		  - none
 ================================================================**/
@@ -266,12 +292,30 @@ void MCAL_GPIO_TOGGLE_PIN(GPIO_TypeDef *GPIOx,uint16_t PinNumber)
 {
 	GPIOx->ODR ^= PinNumber;
 }
+
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+/**================================================================
+ * @Fn		  - MCAL_GPIO_TOGGLE_PORT
+ * @brief 	  - toggle specified GPIOx
+ * @param[in] - base address of GPIOx :can be (A ..... E depending on device used)
+ * @retval	  - none
+ * Note		  - none
+================================================================**/
+void MCAL_GPIO_TOGGLE_PORT(GPIO_TypeDef *GPIOx)
+{
+	uint8_t counter ;
+	uint16_t temp=GPIO_PINS_0;
+	for (counter = 0; counter <=15;counter++)
+	{
+		MCAL_GPIO_TOGGLE_PIN(GPIOx,temp<<counter);
+	}
+}
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 /**================================================================
  * @Fn		  - MCAL_GPIO_LOCK
  * @brief 	  - the locking mechanism allows the IO configuration to be frozen
  * @param[in] - base address of GPIOx :can be (A ..... E depending on device used)
- * @param[in] - pin number set by @ref GPIO_PINS_define
+ * @param[in] - pin number set by @ref GPIO_PINS_define (tpoic 2)
  * @retval	  - ok if pin confige is locked and error if pin not locked according to @ref GPIO_RETURNE_LOCK_State
  * Note		  - none
 ================================================================**/
