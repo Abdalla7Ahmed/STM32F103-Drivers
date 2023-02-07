@@ -118,6 +118,7 @@ Flage_State I2C_Get_Flag_State(I2C_TypeDef *I2Cx,Stated_Flag Flag)
 		break;
 	case I2C_EV_Master_Byte_Transmiting:
 		Bit_Stat = (  ((I2Cx->SR1)  | ((I2Cx->SR2)<<16) ) == I2C_EV_Master_Byte_Transmiting) ?Flag_SET:Flag_Reset ;
+		break;
 	case EV8_2 :
 		Bit_Stat = (( ( (I2Cx->SR1) & EV8_2) == EV8_2)) ?Flag_SET:Flag_Reset;
 		break;
