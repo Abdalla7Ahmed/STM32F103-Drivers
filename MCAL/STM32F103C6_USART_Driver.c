@@ -10,12 +10,18 @@
 //========================================
 
 // ===================================Generic Variables =========================
-UART_Config* Global_UART_Config[3]  = {NULL,NULL,NULL};
-static uint8_t UART_number;
+UART_Config Global_UART_Config[3]  = {0};
+
+
+
+
 // ===========================================================================
 
 // ===================================Generic Macros =========================
 
+#define UART1_INDEX						0
+#define UART2_INDEX						1
+#define UART3_INDEX						2
 
 // ===========================================================================
 
@@ -23,6 +29,120 @@ static uint8_t UART_number;
 
 
 // ===================================Generic functions =========================
+void MCAL_UART_GPIO_set_pins(USART_TypeDef *USARTx)
+{
+	GPIO_PinConfig_t PinCfg ;
+
+	if ( USARTx == USART1 )
+	{
+		//PA9 TX
+		//PA10 RX
+		//PA11 CTS
+		//PA12 RTS
+
+		//PA9 TX
+		PinCfg.GPIO_PinNumber = GPIO_PIN_9;
+		PinCfg.GPIO_MODE = GPIO_MODE_ALTERNATIVE_OUTPUT_PP;
+		PinCfg.GPIO_OUTPUT_SPEED = GPIO_OUTPUT_SPEED_10M;
+		MCAL_GPIO_INIT(GPIOA, &PinCfg);
+
+		//PA10 RX
+		PinCfg.GPIO_PinNumber = GPIO_PIN_10;
+		PinCfg.GPIO_MODE = GPIO_MODE_ALTERNATIVE_INPUT;
+		MCAL_GPIO_INIT(GPIOA, &PinCfg);
+
+		if (Global_UART_Config[UART1_INDEX].HWFlowCtrl==USART_FlowCtrl_CTS_Enable  || Global_UART_Config[UART1_INDEX].HWFlowCtrl ==USART_FlowCtrl_CTS_RTS_Enable  )
+		{
+			//PA11 CTS
+			PinCfg.GPIO_PinNumber = GPIO_PIN_11;
+			PinCfg.GPIO_MODE = GPIO_MODE_FLOATINg_INPUT;
+			MCAL_GPIO_INIT(GPIOA, &PinCfg);
+		}
+
+
+		if (Global_UART_Config[UART1_INDEX].HWFlowCtrl  == USART_FlowCtrl_RTS_Enable|| Global_UART_Config[UART1_INDEX].HWFlowCtrl ==USART_FlowCtrl_CTS_RTS_Enable  )
+		{
+			//PA12 RTS
+			PinCfg.GPIO_PinNumber = GPIO_PIN_12;
+			PinCfg.GPIO_MODE = GPIO_MODE_ALTERNATIVE_OUTPUT_PP;
+			PinCfg.GPIO_OUTPUT_SPEED = GPIO_OUTPUT_SPEED_10M;
+			MCAL_GPIO_INIT(GPIOA, &PinCfg);
+
+		}
+	}
+	else if ( USARTx == USART2 )
+	{
+		//PA2 TX
+		//PA3 RX
+		//PA0 CTS
+		//PA1 RTS
+
+
+		//PA2 TX
+		PinCfg.GPIO_PinNumber = GPIO_PIN_2;
+		PinCfg.GPIO_MODE = GPIO_MODE_ALTERNATIVE_OUTPUT_PP;
+		PinCfg.GPIO_OUTPUT_SPEED = GPIO_OUTPUT_SPEED_10M;
+		MCAL_GPIO_INIT(GPIOA, &PinCfg);
+
+		//PA3 RX
+		PinCfg.GPIO_PinNumber = GPIO_PIN_3;
+		PinCfg.GPIO_MODE = GPIO_MODE_ALTERNATIVE_INPUT;
+		MCAL_GPIO_INIT(GPIOA, &PinCfg);
+
+		if (Global_UART_Config[UART2_INDEX].HWFlowCtrl  ==USART_FlowCtrl_CTS_Enable  || Global_UART_Config[UART2_INDEX].HWFlowCtrl  ==USART_FlowCtrl_CTS_RTS_Enable  )
+		{
+			//PA0 CTS
+			PinCfg.GPIO_PinNumber = GPIO_PIN_0;
+			PinCfg.GPIO_MODE = GPIO_MODE_FLOATINg_INPUT;
+			MCAL_GPIO_INIT(GPIOA, &PinCfg);
+		}
+
+		if (Global_UART_Config[UART2_INDEX].HWFlowCtrl  ==USART_FlowCtrl_RTS_Enable || Global_UART_Config[UART2_INDEX].HWFlowCtrl  ==USART_FlowCtrl_CTS_RTS_Enable  )
+		{
+			//PA1 RTS
+			PinCfg.GPIO_PinNumber = GPIO_PIN_1;
+			PinCfg.GPIO_MODE = GPIO_MODE_ALTERNATIVE_OUTPUT_PP;
+			PinCfg.GPIO_OUTPUT_SPEED = GPIO_OUTPUT_SPEED_10M;
+			MCAL_GPIO_INIT(GPIOA, &PinCfg);
+		}
+	}
+	else if ( USARTx == USART3 )
+	{
+		//PB10 TX
+		//PB11 RX
+		//PB13 CTS
+		//PA14 RTS
+
+		//PB10 TX
+		PinCfg.GPIO_PinNumber = GPIO_PIN_10;
+		PinCfg.GPIO_MODE = GPIO_MODE_ALTERNATIVE_OUTPUT_PP;
+		PinCfg.GPIO_OUTPUT_SPEED = GPIO_OUTPUT_SPEED_10M;
+		MCAL_GPIO_INIT(GPIOB, &PinCfg);
+
+		//PB11 RX
+		PinCfg.GPIO_PinNumber = GPIO_PIN_11;
+		PinCfg.GPIO_MODE = GPIO_MODE_ALTERNATIVE_INPUT;
+		MCAL_GPIO_INIT(GPIOB, &PinCfg);
+
+		if (Global_UART_Config[UART3_INDEX].HWFlowCtrl  ==USART_FlowCtrl_CTS_Enable  || Global_UART_Config[UART3_INDEX].HWFlowCtrl  ==USART_FlowCtrl_CTS_RTS_Enable  )
+		{
+			//PB13 CTS
+			PinCfg.GPIO_PinNumber = GPIO_PIN_13;
+			PinCfg.GPIO_MODE = GPIO_MODE_FLOATINg_INPUT;
+			MCAL_GPIO_INIT(GPIOB, &PinCfg);
+		}
+		if (Global_UART_Config[UART3_INDEX].HWFlowCtrl  ==USART_FlowCtrl_RTS_Enable || Global_UART_Config[UART3_INDEX].HWFlowCtrl  ==USART_FlowCtrl_CTS_RTS_Enable )
+		{
+			//PA14 RTS
+			PinCfg.GPIO_PinNumber = GPIO_PIN_14;
+			PinCfg.GPIO_MODE = GPIO_MODE_ALTERNATIVE_OUTPUT_PP;
+			PinCfg.GPIO_OUTPUT_SPEED = GPIO_OUTPUT_SPEED_10M;
+			MCAL_GPIO_INIT(GPIOB, &PinCfg);
+		}
+	}
+
+}
+
 
 
 /**===================================================================
@@ -35,16 +155,23 @@ static uint8_t UART_number;
 ======================================================================**/
 void MCAL_UART_Init(USART_TypeDef *USARTx,UART_Config *UART_Config)
 {
-	if	   (USARTx == USART1)         UART_number =0;
-	else if(USARTx == USART2)         UART_number =1;
-	else if(USARTx == USART3)         UART_number =2;
-
-	Global_UART_Config[UART_number] = UART_Config;
+	if(USARTx == USART1) 
+	{
+	 	RCC_USART1_CLK_EN();
+	 	Global_UART_Config[UART1_INDEX] = *UART_Config;
+	}
+	else if(USARTx == USART2) 
+	{     
+	 	RCC_USART2_CLK_EN();
+	 	Global_UART_Config[UART2_INDEX] = *UART_Config;
+	}
+	else if(USARTx == USART3)
+	{        
+	 	RCC_USART3_CLK_EN();
+	 	Global_UART_Config[UART3_INDEX] = *UART_Config;
+	}
+	
 	uint32_t pclk,BRR;
-	// Enable the clock
-	if		(USARTx==USART1)  		 {RCC_USART1_CLK_EN();}
-	else if (USARTx==USART2)		 {RCC_USART2_CLK_EN();}
-	else if (USARTx==USART3)		 {RCC_USART3_CLK_EN();}
 	// Enable the USART by writing the UE bit in USART_CR1 register to 1
 	USARTx->CR1 |=1<<13;
 	// select the mode
@@ -76,116 +203,7 @@ void MCAL_UART_Init(USART_TypeDef *USARTx,UART_Config *UART_Config)
 	}
 
 	// set pins of GPIO
-
-	GPIO_PinConfig_t PinCfg ;
-
-	if ( USARTx == USART1 )
-	{
-		//PA9 TX
-		//PA10 RX
-		//PA11 CTS
-		//PA12 RTS
-
-		//PA9 TX
-		PinCfg.GPIO_PinNumber = GPIO_PIN_9;
-		PinCfg.GPIO_MODE = GPIO_MODE_ALTERNATIVE_OUTPUT_PP;
-		PinCfg.GPIO_OUTPUT_SPEED = GPIO_OUTPUT_SPEED_10M;
-		MCAL_GPIO_INIT(GPIOA, &PinCfg);
-
-		//PA10 RX
-		PinCfg.GPIO_PinNumber = GPIO_PIN_10;
-		PinCfg.GPIO_MODE = GPIO_MODE_ALTERNATIVE_INPUT;
-		MCAL_GPIO_INIT(GPIOA, &PinCfg);
-
-		if (Global_UART_Config[UART_number]->HWFlowCtrl==USART_FlowCtrl_CTS_Enable  || Global_UART_Config[UART_number]->HWFlowCtrl ==USART_FlowCtrl_CTS_RTS_Enable  ){
-			//PA11 CTS
-			PinCfg.GPIO_PinNumber = GPIO_PIN_11;
-			PinCfg.GPIO_MODE = GPIO_MODE_FLOATINg_INPUT;
-			MCAL_GPIO_INIT(GPIOA, &PinCfg);
-		}
-
-
-		if (Global_UART_Config[UART_number]->HWFlowCtrl  == USART_FlowCtrl_RTS_Enable|| Global_UART_Config[UART_number]->HWFlowCtrl ==USART_FlowCtrl_CTS_RTS_Enable  )
-		{
-			//PA12 RTS
-			PinCfg.GPIO_PinNumber = GPIO_PIN_12;
-			PinCfg.GPIO_MODE = GPIO_MODE_ALTERNATIVE_OUTPUT_PP;
-			PinCfg.GPIO_OUTPUT_SPEED = GPIO_OUTPUT_SPEED_10M;
-			MCAL_GPIO_INIT(GPIOA, &PinCfg);
-
-		}
-	}
-	else if ( USARTx == USART2 )
-	{
-		//PA2 TX
-		//PA3 RX
-		//PA0 CTS
-		//PA1 RTS
-
-
-		//PA2 TX
-		PinCfg.GPIO_PinNumber = GPIO_PIN_2;
-		PinCfg.GPIO_MODE = GPIO_MODE_ALTERNATIVE_OUTPUT_PP;
-		PinCfg.GPIO_OUTPUT_SPEED = GPIO_OUTPUT_SPEED_10M;
-		MCAL_GPIO_INIT(GPIOA, &PinCfg);
-
-		//PA3 RX
-		PinCfg.GPIO_PinNumber = GPIO_PIN_3;
-		PinCfg.GPIO_MODE = GPIO_MODE_ALTERNATIVE_INPUT;
-		MCAL_GPIO_INIT(GPIOA, &PinCfg);
-
-		if (Global_UART_Config[UART_number]->HWFlowCtrl  ==USART_FlowCtrl_CTS_Enable  || Global_UART_Config[UART_number]->HWFlowCtrl  ==USART_FlowCtrl_CTS_RTS_Enable  )
-		{
-			//PA0 CTS
-			PinCfg.GPIO_PinNumber = GPIO_PIN_0;
-			PinCfg.GPIO_MODE = GPIO_MODE_FLOATINg_INPUT;
-			MCAL_GPIO_INIT(GPIOA, &PinCfg);
-		}
-
-		if (Global_UART_Config[UART_number]->HWFlowCtrl  ==USART_FlowCtrl_RTS_Enable || Global_UART_Config[UART_number]->HWFlowCtrl  ==USART_FlowCtrl_CTS_RTS_Enable  )
-		{
-			//PA1 RTS
-			PinCfg.GPIO_PinNumber = GPIO_PIN_1;
-			PinCfg.GPIO_MODE = GPIO_MODE_ALTERNATIVE_OUTPUT_PP;
-			PinCfg.GPIO_OUTPUT_SPEED = GPIO_OUTPUT_SPEED_10M;
-			MCAL_GPIO_INIT(GPIOA, &PinCfg);
-		}
-	}
-	else if ( USARTx == USART3 )
-	{
-		//PB10 TX
-		//PB11 RX
-		//PB13 CTS
-		//PA14 RTS
-
-		//PB10 TX
-		PinCfg.GPIO_PinNumber = GPIO_PIN_10;
-		PinCfg.GPIO_MODE = GPIO_MODE_ALTERNATIVE_OUTPUT_PP;
-		PinCfg.GPIO_OUTPUT_SPEED = GPIO_OUTPUT_SPEED_10M;
-		MCAL_GPIO_INIT(GPIOB, &PinCfg);
-
-		//PB11 RX
-		PinCfg.GPIO_PinNumber = GPIO_PIN_11;
-		PinCfg.GPIO_MODE = GPIO_MODE_ALTERNATIVE_INPUT;
-		MCAL_GPIO_INIT(GPIOB, &PinCfg);
-
-		if (Global_UART_Config[UART_number]->HWFlowCtrl  ==USART_FlowCtrl_CTS_Enable  || Global_UART_Config[UART_number]->HWFlowCtrl  ==USART_FlowCtrl_CTS_RTS_Enable  )
-		{
-			//PB13 CTS
-			PinCfg.GPIO_PinNumber = GPIO_PIN_13;
-			PinCfg.GPIO_MODE = GPIO_MODE_FLOATINg_INPUT;
-			MCAL_GPIO_INIT(GPIOB, &PinCfg);
-		}
-		if (Global_UART_Config[UART_number]->HWFlowCtrl  ==USART_FlowCtrl_RTS_Enable || Global_UART_Config[UART_number]->HWFlowCtrl  ==USART_FlowCtrl_CTS_RTS_Enable )
-		{
-			//PA14 RTS
-			PinCfg.GPIO_PinNumber = GPIO_PIN_14;
-			PinCfg.GPIO_MODE = GPIO_MODE_ALTERNATIVE_OUTPUT_PP;
-			PinCfg.GPIO_OUTPUT_SPEED = GPIO_OUTPUT_SPEED_10M;
-			MCAL_GPIO_INIT(GPIOB, &PinCfg);
-		}
-	}
-
+	MCAL_UART_GPIO_set_pins(USARTx);
 }
 /**===================================================================
  * @Fn				- MCAL_UART_DeInit
@@ -215,8 +233,10 @@ void MCAL_UART_DeInit(USART_TypeDef *USARTx)
 void MCAL_UART_SendData(USART_TypeDef *USARTx,uint16_t *pTxBuffer,enum polling_mecism pollingEn)
 {
 	if (pollingEn==Enable) {while(!(USARTx->SR & 1<<7));}
+	uint8_t Index ;
+	Index = (USARTx == USART1)?UART1_INDEX :(USARTx == USART2)?UART2_INDEX:UART3_INDEX;
 
-	if(Global_UART_Config[UART_number]->PayLoad_Length == USART_Payload_Length_9B)
+	if(Global_UART_Config[Index].PayLoad_Length == USART_Payload_Length_9B)
 	{
 		/*When transmitting with the parity enabled (PCE bit set to 1 in the USART_CR1 register),
 		the value written in the MSB (bit 7 or bit 8 depending on the data length) has no effect
@@ -245,10 +265,12 @@ void MCAL_UART_WAIT_TC (USART_TypeDef *USARTx )
 ======================================================================**/
 void MCAL_UART_ReceiveData(USART_TypeDef *USARTx,uint16_t *pRxBuffer,enum polling_mecism pollingEn)
 {
+	uint8_t Index ;
+	Index = (USARTx == USART1)?UART1_INDEX :(USARTx == USART2)?UART2_INDEX:UART3_INDEX;
 	if (pollingEn==Enable) {while(!(USARTx->SR & 1<<5));}
-	if(Global_UART_Config[UART_number]->PayLoad_Length == USART_Payload_Length_9B)
+	if(Global_UART_Config[Index].PayLoad_Length == USART_Payload_Length_9B)
 	{
-		if(Global_UART_Config[UART_number]->parity == USART_Paratiy_NONE)
+		if(Global_UART_Config[Index].parity == USART_Paratiy_NONE)
 		{
 			//no parity So all 9bit are considered data
 			*((uint16_t*) pRxBuffer) = USARTx->DR ;
@@ -261,7 +283,7 @@ void MCAL_UART_ReceiveData(USART_TypeDef *USARTx,uint16_t *pRxBuffer,enum pollin
 	}
 	else
 	{
-		if(Global_UART_Config[UART_number]->parity == USART_Paratiy_NONE)
+		if(Global_UART_Config[Index].parity == USART_Paratiy_NONE)
 		{
 			//no parity So all 8bit are considered data
 			*((uint16_t*) pRxBuffer) = ( USARTx->DR  & (uint8_t)0xFF );
@@ -279,15 +301,15 @@ void MCAL_UART_ReceiveData(USART_TypeDef *USARTx,uint16_t *pRxBuffer,enum pollin
 //ISR
 void USART1_IRQHandler (void)
 {
-	Global_UART_Config[0]->P_IRQ_CallBack();
+	Global_UART_Config[0].P_IRQ_CallBack();
 }
 
 void USART2_IRQHandler (void)
 {
-	Global_UART_Config[1]->P_IRQ_CallBack();
+	Global_UART_Config[1].P_IRQ_CallBack();
 }
 void USART3_IRQHandler (void)
 {
-	Global_UART_Config[2]->P_IRQ_CallBack();
+	Global_UART_Config[2].P_IRQ_CallBack();
 }
 
