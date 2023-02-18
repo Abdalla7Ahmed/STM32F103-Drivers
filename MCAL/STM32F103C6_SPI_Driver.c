@@ -16,7 +16,9 @@
 //========================================
 
 // ===================================Generic Variables =========================
-SPI_Config* Global_SPI_Config[2]  = {NULL,NULL};
+SPI_Config Global_SPI_Config[2]  = {0};
+
+
 // ===========================================================================
 
 // ===================================Generic Macros =========================
@@ -64,7 +66,7 @@ void MCAL_SPI_GPIO_set_pins(SPI_TypeDef *SPIx)
 	if(SPIx == SPI1)
 	{
 		// if SPI1 is Master
-		if( Global_SPI_Config[SPI1_index]->Device_mode == SPI_Device_Mode_Master)
+		if( Global_SPI_Config[SPI1_index].Device_mode == SPI_Device_Mode_Master)
 		{
 			// SPI1_SCK  : PA5     Alternate function push-pull
 			GPIO_pin_config.GPIO_MODE = GPIO_MODE_ALTERNATIVE_OUTPUT_PP;
@@ -84,7 +86,7 @@ void MCAL_SPI_GPIO_set_pins(SPI_TypeDef *SPIx)
 			GPIO_pin_config.GPIO_PinNumber = GPIO_PIN_6;
 			MCAL_GPIO_INIT(GPIOA, &GPIO_pin_config);
 
-			if( Global_SPI_Config[SPI1_index]->NSS == SPI_NSS_HW_Master_Outout_enable)
+			if( Global_SPI_Config[SPI1_index].NSS == SPI_NSS_HW_Master_Outout_enable)
 			{
 				//SPI1_NSS  : PA4     Alternate function push-pull
 				GPIO_pin_config.GPIO_MODE = GPIO_MODE_ALTERNATIVE_OUTPUT_PP;
@@ -92,7 +94,7 @@ void MCAL_SPI_GPIO_set_pins(SPI_TypeDef *SPIx)
 				GPIO_pin_config.GPIO_PinNumber = GPIO_PIN_4;
 				MCAL_GPIO_INIT(GPIOA, &GPIO_pin_config);
 			}
-			else if( Global_SPI_Config[SPI1_index]->NSS == SPI_NSS_HW_Master_Outout_Disable)
+			else if( Global_SPI_Config[SPI1_index].NSS == SPI_NSS_HW_Master_Outout_Disable)
 			{
 				//SPI1_NSS  : PA4 Input floating
 				GPIO_pin_config.GPIO_MODE = GPIO_MODE_FLOATINg_INPUT;
@@ -101,7 +103,7 @@ void MCAL_SPI_GPIO_set_pins(SPI_TypeDef *SPIx)
 			}
 		}
 		// if SPI1 is Slave
-		else if ( Global_SPI_Config[SPI1_index]->Device_mode == SPI_Device_Mode_Slave)
+		else if ( Global_SPI_Config[SPI1_index].Device_mode == SPI_Device_Mode_Slave)
 		{
 
 			// SPI1_SCK  : PA5   Input floating
@@ -124,7 +126,7 @@ void MCAL_SPI_GPIO_set_pins(SPI_TypeDef *SPIx)
 
 
 
-			if( Global_SPI_Config[SPI1_index]->NSS == SPI_NSS_HW_Master_Outout_Disable)
+			if( Global_SPI_Config[SPI1_index].NSS == SPI_NSS_HW_Master_Outout_Disable)
 			{
 				//SPI1_NSS  : PA4 Input floating
 				GPIO_pin_config.GPIO_MODE = GPIO_MODE_FLOATINg_INPUT;
@@ -141,7 +143,7 @@ void MCAL_SPI_GPIO_set_pins(SPI_TypeDef *SPIx)
 	else if(SPIx == SPI2)
 	{
 		// if SPI2 is Master
-		if( Global_SPI_Config[SPI2_index]->Device_mode == SPI_Device_Mode_Master)
+		if( Global_SPI_Config[SPI2_index].Device_mode == SPI_Device_Mode_Master)
 		{
 			// SPI2_SCK  : PB13     Alternate function push-pull
 			GPIO_pin_config.GPIO_MODE = GPIO_MODE_ALTERNATIVE_OUTPUT_PP;
@@ -161,7 +163,7 @@ void MCAL_SPI_GPIO_set_pins(SPI_TypeDef *SPIx)
 			GPIO_pin_config.GPIO_PinNumber = GPIO_PIN_14;
 			MCAL_GPIO_INIT(GPIOB, &GPIO_pin_config);
 
-			if( Global_SPI_Config[SPI2_index]->NSS == SPI_NSS_HW_Master_Outout_enable)
+			if( Global_SPI_Config[SPI2_index].NSS == SPI_NSS_HW_Master_Outout_enable)
 			{
 				//SPI2_NSS  : PB12     Alternate function push-pull
 				GPIO_pin_config.GPIO_MODE = GPIO_MODE_ALTERNATIVE_OUTPUT_PP;
@@ -169,7 +171,7 @@ void MCAL_SPI_GPIO_set_pins(SPI_TypeDef *SPIx)
 				GPIO_pin_config.GPIO_PinNumber = GPIO_PIN_12;
 				MCAL_GPIO_INIT(GPIOB, &GPIO_pin_config);
 			}
-			else if( Global_SPI_Config[SPI2_index]->NSS == SPI_NSS_HW_Master_Outout_Disable)
+			else if( Global_SPI_Config[SPI2_index].NSS == SPI_NSS_HW_Master_Outout_Disable)
 			{
 				//SPI2_NSS  : PB12 Input floating
 				GPIO_pin_config.GPIO_MODE = GPIO_MODE_FLOATINg_INPUT;
@@ -180,7 +182,7 @@ void MCAL_SPI_GPIO_set_pins(SPI_TypeDef *SPIx)
 
 		}
 		// if SPI2 is Slave
-		else if ( Global_SPI_Config[SPI2_index]->Device_mode == SPI_Device_Mode_Slave)
+		else if ( Global_SPI_Config[SPI2_index].Device_mode == SPI_Device_Mode_Slave)
 		{
 
 			// SPI2_SCK  : PB13   Input floating
@@ -201,7 +203,7 @@ void MCAL_SPI_GPIO_set_pins(SPI_TypeDef *SPIx)
 			GPIO_pin_config.GPIO_PinNumber = GPIO_PIN_14;
 			MCAL_GPIO_INIT(GPIOB, &GPIO_pin_config);
 
-			if( Global_SPI_Config[SPI2_index]->NSS == SPI_NSS_HW_Master_Outout_Disable)
+			if( Global_SPI_Config[SPI2_index].NSS == SPI_NSS_HW_Master_Outout_Disable)
 			{
 				//SPI1_NSS  : PA4 Input floating
 				GPIO_pin_config.GPIO_MODE = GPIO_MODE_FLOATINg_INPUT;
@@ -226,8 +228,16 @@ void MCAL_SPI_GPIO_set_pins(SPI_TypeDef *SPIx)
 void MCAL_SPI_Init(SPI_TypeDef *SPIx,SPI_Config *SPI_Config)
 {
 
-	if     (SPIx == SPI1)              Global_SPI_Config[SPI1_index] = SPI_Config;
-	else if(SPIx == SPI2)              Global_SPI_Config[SPI2_index] = SPI_Config;
+	if     (SPIx == SPI1)
+	{
+		Global_SPI_Config[SPI1_index] = *SPI_Config;
+		RCC_SPI1_CLK_EN();
+	}
+	else if(SPIx == SPI2)    
+	{ 
+		Global_SPI_Config[SPI2_index] = *SPI_Config;
+		RCC_SPI1_CLK_EN();
+	}
 
 	uint16_t TMP_SPI_CR1 =0;
 	uint16_t TMP_SPI_CR2 =0;
@@ -381,7 +391,7 @@ void SPI1_IRQHandler(void)
 	IRQ_src.RXNEI = (SPI1->SR &(1<<0) >>0);
 	IRQ_src.ERRI  = (SPI1->SR &(1<<4) >>4);
 
-	Global_SPI_Config[SPI1_index]->P_IRQ_CallBack(IRQ_src);
+	Global_SPI_Config[SPI1_index].P_IRQ_CallBack(IRQ_src);
 }
 
 
@@ -392,5 +402,5 @@ void SPI2_IRQHandler(void)
 	IRQ_src.RXNEI = (SPI2->SR &(1<<0) >>0);
 	IRQ_src.ERRI  = (SPI2->SR &(1<<4) >>4);
 
-	Global_SPI_Config[SPI2_index]->P_IRQ_CallBack(IRQ_src);
+	Global_SPI_Config[SPI2_index].P_IRQ_CallBack(IRQ_src);
 }
