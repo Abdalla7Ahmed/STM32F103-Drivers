@@ -16,25 +16,25 @@ typedef struct
 {
 	// Specify TX/RX Enable/Disable
 	//this parameter must be set based on @ref USART_Mode_Define
-	uint8_t USART_Mode;
+	uint16_t USART_Mode;
 	// configure the USART communication baud rate
 	//this parameter must be set based on @ref USART_BaudRate_Define
 	uint32_t Baud_rate;
 	// Specify the number of transmitted bits
 	//this parameter must be set based on @ref USART_Payload_Length_define
-	uint8_t PayLoad_Length;
+	uint16_t PayLoad_Length;
 	// Specify the parity mode (none , even or odd)
 	//this parameter must be set based on @ref USART_Paratiy_define
-	uint8_t parity;
+	uint16_t parity;
 	// Specify the number of stop bits
 	//this parameter must be set based on @ref USART_StopBits_define
-	uint8_t stopBits;
+	uint16_t stopBits;
 	// Specifies whether the Hardware flow control mode is enable or disable
 	//this parameter must be set based on @ref USART_FlowCtrl_define
-	uint8_t HWFlowCtrl;
+	uint16_t HWFlowCtrl;
 	// Enable or disable the interrupt
 	//this parameter must be set based on @ref USART_IRQ_Enable_define
-	uint8_t IRQ_Enable;
+	uint16_t IRQ_Enable;
 	// Set the c function which will be called once the IRQ happened.
 	void(* P_IRQ_CallBack)(void);
 }UART_Config;
@@ -47,9 +47,9 @@ typedef struct
 //----------------------------------------------------------
 
 //@ref USART_Mode_Define
-#define USART_Mode_TX 							   (uint32_t)(1<<3) // bit 3 enable the transmit
-#define USART_Mode_RX							   (uint32_t)(1<<2) // bit 2 enable the receive
-#define USART_Mode_TX_RX						   (uint32_t)(1<<3 | 1<<2) // enable both the transmit and  the receive
+#define USART_Mode_TX 							   (uint16_t)(1<<3) // bit 3 enable the transmit
+#define USART_Mode_RX							   (uint16_t)(1<<2) // bit 2 enable the receive
+#define USART_Mode_TX_RX						   (uint16_t)(1<<3 | 1<<2) // enable both the transmit and  the receive
 
 //@ref USART_BaudRate_Define
 #define USART_BaudRate_2400                       2400
@@ -64,31 +64,31 @@ typedef struct
 #define USART_BaudRate_4500000                    4500000
 
 //@ref USART_Payload_Length_define
-#define USART_Payload_Length_8B                   (uint32_t)(0)
-#define USART_Payload_Length_9B					  (uint32_t)(1<<12)
+#define USART_Payload_Length_8B                   (uint16_t)(0)
+#define USART_Payload_Length_9B					  (uint16_t)(1<<12)
 // @ref USART_Paratiy_define
-#define USART_Paratiy_NONE 						  (uint32_t)(0)
-#define USART_Paratiy_EVEN					      (uint32_t)(1<<10 )
-#define USART_Paratiy_ODD						  (uint32_t)(1<<10 | 1<<9)
+#define USART_Paratiy_NONE 						  (uint16_t)(0)
+#define USART_Paratiy_EVEN					      (uint16_t)(1<<10 )
+#define USART_Paratiy_ODD						  (uint16_t)(1<<10 | 1<<9)
 
 //@ref USART_StopBits_define
-#define USART_StopBits_HALF						  (uint32_t)(0b01<<12)
-#define USART_StopBits_ONE						  (uint32_t)(0)
-#define USART_StopBits_ONE_HALF					  (uint32_t)(0b11<<12)
-#define USART_StopBits_TWO						  (uint32_t)(0b10<<12)
+#define USART_StopBits_HALF						  (uint16_t)(0b01<<12)
+#define USART_StopBits_ONE						  (uint16_t)(0)
+#define USART_StopBits_ONE_HALF					  (uint16_t)(0b11<<12)
+#define USART_StopBits_TWO						  (uint16_t)(0b10<<12)
 
 //@ref USART_FlowCtrl_define
-#define USART_FlowCtrl_NONE    					  (uint32_t)(0)
-#define USART_FlowCtrl_CTS_Enable    			  (uint32_t)(1<<9)
-#define USART_FlowCtrl_RTS_Enable				  (uint32_t)(1<<8)
-#define USART_FlowCtrl_CTS_RTS_Enable			  (uint32_t)(1<<8 | 1<<9)
+#define USART_FlowCtrl_NONE    					  (uint16_t)(0)
+#define USART_FlowCtrl_CTS_Enable    			  (uint16_t)(1<<9)
+#define USART_FlowCtrl_RTS_Enable				  (uint16_t)(1<<8)
+#define USART_FlowCtrl_CTS_RTS_Enable			  (uint16_t)(1<<8 | 1<<9)
 
 //@ref USART_IRQ_Enable_define
-#define USART_IRQ_Enable_NONE                     (uint32_t)(0)
-#define USART_IRQ_Enable_TXE                      (uint32_t)(1<<7) // transmit data register empty
-#define USART_IRQ_Enable_TC                       (uint32_t)(1<<6) // transmission complete
-#define USART_IRQ_Enable_RXNEIE                   (uint32_t)(1<<5) // Received data ready to be read & Overrun error detected
-#define USART_IRQ_Enable_PE                       (uint32_t)(1<<8) //Parity error
+#define USART_IRQ_Enable_NONE                     (uint16_t)(0)
+#define USART_IRQ_Enable_TXE                      (uint16_t)(1<<7) // transmit data register empty
+#define USART_IRQ_Enable_TC                       (uint16_t)(1<<6) // transmission complete
+#define USART_IRQ_Enable_RXNEIE                   (uint16_t)(1<<5) // Received data ready to be read & Overrun error detected
+#define USART_IRQ_Enable_PE                       (uint16_t)(1<<8) //Parity error
 
 
 enum polling_mecism {
@@ -100,7 +100,6 @@ enum polling_mecism {
 
 void MCAL_UART_Init(USART_TypeDef *USARTx,UART_Config *UART_Config);
 void MCAL_UART_DeInit(USART_TypeDef *USARTx);
-void MCAL_UART_GPIO_set_pins(USART_TypeDef *USARTx);
 void MCAL_UART_SendData(USART_TypeDef *USARTx,uint16_t *pTxBuffer,enum polling_mecism pollingEn);
 void MCAL_UART_ReceiveData(USART_TypeDef *USARTx,uint16_t *pRxBuffer,enum polling_mecism pollingEn);
 void MCAL_UART_WAIT_TC(USART_TypeDef *USARTx);

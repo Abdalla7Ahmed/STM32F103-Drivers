@@ -16,8 +16,8 @@
 
 typedef struct
 {
-	uint8_t		 DUAL_Address_Enable      ;				 // @ref Dual_Address_define
-	uint8_t 	 I2C_Addressing_Slave_Mode;			 //@ref I2C_Addressing_Slave_define
+	uint16_t	 DUAL_Address_Enable      ;				// @ref Dual_Address_define
+	uint16_t 	 I2C_Addressing_Slave_Mode;			    //@ref I2C_Addressing_Slave_define
 	uint16_t 	 Primary_Slave_Address    ;
 	uint16_t 	 Secondary_Slave_Address  ;            // if you enable the Dual address
 
@@ -40,19 +40,19 @@ typedef struct
 	uint32_t I2C_clock_speed;
 	// Enable or Disable the stretching
 	//this parameter must be set based on @ref I2C_stretching_Define
-	uint8_t stretching_mode;
+	uint16_t stretching_mode;
 	// Specify the mode of I2C
 	//this parameter must be set based on @ref I2C_Mode_define
-	uint8_t I2C_Mode;
+	uint16_t I2C_Mode;
 	// Specify the primary slave address and the secondary if you enable Dual address
 	//this parameter must be set based on struct I2C_Slave_Address
 	I2C_Slave_Address I2C_Slave_Device_Address;
 	// Enable or disable Acknowledge
 	//this parameter must be set based on @ref I2C_ACK_define
-	uint8_t I2C_ACK_control;
+	uint16_t I2C_ACK_control;
 	// Enable or disable General call enable
 	//this parameter must be set based on //@ref I2C_ENGC_define
-	uint8_t I2C_General_call_address_detection;
+	uint16_t I2C_General_call_address_detection;
 	// Set the c function which will be called once the IRQ happened.
 	void(* P_Slave_Event_CallBack)(Slave_state stete);
 }I2C_Config;
@@ -62,19 +62,20 @@ typedef struct
 // Macros configuration references
 //----------------------------------------------------------
 //@ref I2C_Clock_Define
-#define I2C_SM_10K										(10000U)
-#define I2C_SM_20K										(20000U)
-#define I2C_SM_30K										(30000U)
-#define I2C_SM_40K										(40000U)
-#define I2C_SM_50K										(50000U)
-#define I2C_SM_60K										(60000U)
-#define I2C_SM_70K										(70000U)
-#define I2C_SM_80K										(80000U)
-#define I2C_SM_90K										(90000U)
-#define I2C_SM_100K										(100000U)
-#define I2C_FM_150K										(150000U)		// Fast mode not supported yet
-#define I2C_FM_200K										(200000U)		// Fast mode not supported yet
-#define I2C_FM_400K										(400000U)		// Fast mode not supported yet
+#define I2C_SM_10K										(uint32_t)(10000U)
+#define I2C_SM_20K										(uint32_t)(20000U)
+#define I2C_SM_30K										(uint32_t)(30000U)
+#define I2C_SM_40K										(uint32_t)(40000U)
+#define I2C_SM_50K										(uint32_t)(50000U)
+#define I2C_SM_60K										(uint32_t)(60000U)
+#define I2C_SM_70K										(uint32_t)(70000U)
+#define I2C_SM_80K										(uint32_t)(80000U)
+#define I2C_SM_90K										(uint32_t)(90000U)
+#define I2C_SM_100K										(uint32_t)(100000U)
+// todo
+#define I2C_FM_150K										(uint32_t)(150000U)		// Fast mode not supported yet
+#define I2C_FM_200K										(uint32_t)(200000U)		// Fast mode not supported yet
+#define I2C_FM_400K										(uint32_t)(400000U)		// Fast mode not supported yet
 
 //@ref I2C_stretching_Define
 #define I2C_stretching_Enable							 (uint16_t)(0x0)
@@ -82,7 +83,7 @@ typedef struct
 
 
 //@ref I2C_Mode_define
-#define I2C_Mode_I2C								     (uint16_t)(0x0)
+#define I2C_Mode_I2C								     (uint16_t)(~I2C_CR1_SMBUS)
 #define I2C_Mode_SMBus							 		 (uint16_t)(I2C_CR1_SMBUS)
 
 
@@ -95,13 +96,12 @@ typedef struct
 #define I2C_Addressing_Slave_10bit						  (uint16_t)(I2C_OAR1_ADDMODE)
 
 //@ref I2C_ACK_define
-//large integer implicitly truncated to unsigned type ???
-//#define I2C_ACK_Disable						  			  (uint16_t)(0x0)
-//#define I2C_ACK_Enable						 			  (uint16_t)(I2C_CR1_ACK)
+#define I2C_ACK_Disable						  			  (uint16_t)(0x0)
+#define I2C_ACK_Enable						 			  (uint16_t)(I2C_CR1_ACK)
 
 
-#define I2C_ACK_Disable						  			  (0x0)
-#define I2C_ACK_Enable						 			  (1)
+//#define I2C_ACK_Disable						  			  (0x0)
+//#define I2C_ACK_Enable						 			  (1)
 
 //@ref I2C_ENGC_define
 #define I2C_ENGC_Disable								  (uint16_t)(0x0)

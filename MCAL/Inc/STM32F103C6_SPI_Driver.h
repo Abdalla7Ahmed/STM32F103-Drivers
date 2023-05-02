@@ -60,57 +60,57 @@ typedef struct
 //----------------------------------------------------------
 
 //@ref SPI_Device_Mode_Define
-#define SPI_Device_Mode_Slave 							   (uint32_t)(0x0)  //SPI_CR1.2 : the SPI will be Slave
-#define SPI_Device_Mode_Master							   (uint32_t)(1<<2) //SPI_CR1.2 : the SPI will be Master
+#define SPI_Device_Mode_Slave 							   (uint16_t)(0x0)  //SPI_CR1.2 : the SPI will be Slave
+#define SPI_Device_Mode_Master							   (uint16_t)(1<<2) //SPI_CR1.2 : the SPI will be Master
 
 //@ref SPI_Direction_define
-#define SPI_Direction_2_line_unidirectional                (uint32_t)(0x0)    //SPI_CR1.15 : two line enable
-#define SPI_Direction_2_line_bidirectional_received_only   (uint32_t)(0x0)	  //SPI_CR1.15,10 : two line received only
-#define SPI_Direction_2_line_bidirectional_Full_duplex     (uint32_t)(1<<10)  //SPI_CR1.15,10 : two line received and transmit
-#define SPI_Direction_1_line_bidirectional_received_only   (uint32_t)(1<<15)  //SPI_CR1.15,14 : one line received only
-#define SPI_Direction_1_line_bidirectional_transmit_only   (uint32_t)((1<<15) | (1<<14)) //SPI_CR1.15,14 : one line transmit only
+#define SPI_Direction_2_line_unidirectional                (uint16_t)(0x0)    //SPI_CR1.15 : two line enable
+#define SPI_Direction_2_line_bidirectional_received_only   (uint16_t)(0x0)	  //SPI_CR1.15,10 : two line received only
+#define SPI_Direction_2_line_bidirectional_Full_duplex     (uint16_t)(1<<10)  //SPI_CR1.15,10 : two line received and transmit
+#define SPI_Direction_1_line_bidirectional_received_only   (uint16_t)(1<<15)  //SPI_CR1.15,14 : one line received only
+#define SPI_Direction_1_line_bidirectional_transmit_only   (uint16_t)((1<<15) | (1<<14)) //SPI_CR1.15,14 : one line transmit only
 
 
 //@ref SPI_Frame_formate_define
-#define SPI_Frame_formate_LSB_First                   	   (uint32_t)(1<<7)  //SPI_CR1.7 : least significant bit will send first
-#define SPI_Frame_formate_MSB_First					       (uint32_t)(0x0)	 //SPI_CR1.7 : Most significant bit will send first
+#define SPI_Frame_formate_LSB_First                   	   (uint16_t)(1<<7)  //SPI_CR1.7 : least significant bit will send first
+#define SPI_Frame_formate_MSB_First					       (uint16_t)(0x0)	 //SPI_CR1.7 : Most significant bit will send first
 
 
 // @ref SPI_Data_Size_define
-#define SPI_Data_Size_8_Bits 							   (uint32_t)(0)     //SPI_CR1.16 : 8-bit data frame format is selected for transmission/reception
-#define SPI_Data_Size_16_Bits					     	   (uint32_t)(1<<16) //SPI_CR1.16 : 16-bit data frame format is selected for transmission/reception
+#define SPI_Data_Size_8_Bits 							   (uint16_t)(0)     //SPI_CR1.16 : 8-bit data frame format is selected for transmission/reception
+#define SPI_Data_Size_16_Bits					     	   (uint16_t)(1<<16) //SPI_CR1.16 : 16-bit data frame format is selected for transmission/reception
 
 //@ref SPI_CLK_Polarity_define
-#define SPI_CLK_Polarity_0_When_Idle					    (uint32_t)(0x0)  //SPI_CR1.1 : ClocK to 0 when idle
-#define SPI_CLK_Polarity_1_When_Idle						(uint32_t)(1<<1) //SPI_CR1.1 : ClocK to 1 when idle
+#define SPI_CLK_Polarity_0_When_Idle					    (uint16_t)(0x0)  //SPI_CR1.1 : ClocK to 0 when idle
+#define SPI_CLK_Polarity_1_When_Idle						(uint16_t)(1<<1) //SPI_CR1.1 : ClocK to 1 when idle
 
 
 //@ref SPI_CLK_Phase_define
-#define SPI_CLK_Phase_capture_IN_first_edge   			     (uint32_t)(0x0)  //SPI_CR1.0 : The first clock transition is the first data capture edge
-#define SPI_CLK_Phase_capture_IN_second_edge    			 (uint32_t)(1<<0) //SPI_CR1.0 : The second clock transition is the first data capture edge
+#define SPI_CLK_Phase_capture_IN_first_edge   			     (uint16_t)(0x0)  //SPI_CR1.0 : The first clock transition is the first data capture edge
+#define SPI_CLK_Phase_capture_IN_second_edge    			 (uint16_t)(1<<0) //SPI_CR1.0 : The second clock transition is the first data capture edge
 
 //@ref SPI_NSS_define
-#define SPI_NSS_HW_slave                     				 (uint32_t)(0)    //SPI_CR1.9 : enable Hardware NSS and disable software
-#define SPI_NSS_HW_Master_Outout_Disable                     (uint32_t)(~(1<<2))	  //SPI_CR2.2 : Hardware output disable
-#define SPI_NSS_HW_Master_Outout_enable                      (uint32_t)(1<<2) //SPI_CR2.2 : Hardware output enable
-#define SPI_NSS_SW_Set                     					 (uint32_t)((1<<8) |(1<<9))	  //SPI_CR1.8,9 :
-#define SPI_NSS_SW_Reset                     				 (uint32_t)(1<<9)	  	      //SPI_CR1.8,9 :
+#define SPI_NSS_HW_slave                     				 (uint16_t)(0)    //SPI_CR1.9 : enable Hardware NSS and disable software
+#define SPI_NSS_HW_Master_Outout_Disable                     (uint16_t)(~(1<<2))	  //SPI_CR2.2 : Hardware output disable
+#define SPI_NSS_HW_Master_Outout_enable                      (uint16_t)(1<<2) //SPI_CR2.2 : Hardware output enable
+#define SPI_NSS_SW_Set                     					 (uint16_t)((1<<8) |(1<<9))	  //SPI_CR1.8,9 :
+#define SPI_NSS_SW_Reset                     				 (uint16_t)(1<<9)	  	      //SPI_CR1.8,9 :
 
 //@ref SPI_Baud_rate_define
-#define SPI_Baud_rate_Fpclk_Div_2							 (uint32_t)(0)      	   //SPI_CR1 3-->5 : the baud rate is the frequency of the bus divided by 2
-#define SPI_Baud_rate_Fpclk_Div_4							 (uint32_t)(0b001<<3)      //SPI_CR1 3-->5 : the baud rate is the frequency of the bus divided by 4
-#define SPI_Baud_rate_Fpclk_Div_8							 (uint32_t)(0b010<<3)	   //SPI_CR1 3-->5 : the baud rate is the frequency of the bus divided by 8
-#define SPI_Baud_rate_Fpclk_Div_16							 (uint32_t)(0b011<<3)	   //SPI_CR1 3-->5 : the baud rate is the frequency of the bus divided by 16
-#define SPI_Baud_rate_Fpclk_Div_32							 (uint32_t)(0b100<<3)	   //SPI_CR1 3-->5 : the baud rate is the frequency of the bus divided by 32
-#define SPI_Baud_rate_Fpclk_Div_64							 (uint32_t)(0b101<<3)	   //SPI_CR1 3-->5 : the baud rate is the frequency of the bus divided by 64
-#define SPI_Baud_rate_Fpclk_Div_128							 (uint32_t)(0b110<<3)	   //SPI_CR1 3-->5 : the baud rate is the frequency of the bus divided by 128
-#define SPI_Baud_rate_Fpclk_Div_256							 (uint32_t)(0b111<<3)	   //SPI_CR1 3-->5 : the baud rate is the frequency of the bus divided by 256
+#define SPI_Baud_rate_Fpclk_Div_2							 (uint16_t)(0)      	   //SPI_CR1 3-->5 : the baud rate is the frequency of the bus divided by 2
+#define SPI_Baud_rate_Fpclk_Div_4							 (uint16_t)(0b001<<3)      //SPI_CR1 3-->5 : the baud rate is the frequency of the bus divided by 4
+#define SPI_Baud_rate_Fpclk_Div_8							 (uint16_t)(0b010<<3)	   //SPI_CR1 3-->5 : the baud rate is the frequency of the bus divided by 8
+#define SPI_Baud_rate_Fpclk_Div_16							 (uint16_t)(0b011<<3)	   //SPI_CR1 3-->5 : the baud rate is the frequency of the bus divided by 16
+#define SPI_Baud_rate_Fpclk_Div_32							 (uint16_t)(0b100<<3)	   //SPI_CR1 3-->5 : the baud rate is the frequency of the bus divided by 32
+#define SPI_Baud_rate_Fpclk_Div_64							 (uint16_t)(0b101<<3)	   //SPI_CR1 3-->5 : the baud rate is the frequency of the bus divided by 64
+#define SPI_Baud_rate_Fpclk_Div_128							 (uint16_t)(0b110<<3)	   //SPI_CR1 3-->5 : the baud rate is the frequency of the bus divided by 128
+#define SPI_Baud_rate_Fpclk_Div_256							 (uint16_t)(0b111<<3)	   //SPI_CR1 3-->5 : the baud rate is the frequency of the bus divided by 256
 
 //@ref SPI_IRQ_Enable_define
-#define SPI_IRQ_Enable_NONE									 (uint32_t)(0)
-#define SPI_IRQ_Enable_TXEIE								 (uint32_t)(1<<7)			//SPI_CR2.7  :  TX buffer empty interrupt
-#define SPI_IRQ_Enable_RXNEIE								 (uint32_t)(1<<6)			//SPI_CR2.7  :	RX buffer not empty interrupt
-#define SPI_IRQ_Enable_ERRIE								 (uint32_t)(1<<5)			//SPI_CR2.7  :	ERROR interrupt
+#define SPI_IRQ_Enable_NONE									 (uint16_t)(0)
+#define SPI_IRQ_Enable_TXEIE								 (uint16_t)(1<<7)			//SPI_CR2.7  :  TX buffer empty interrupt
+#define SPI_IRQ_Enable_RXNEIE								 (uint16_t)(1<<6)			//SPI_CR2.7  :	RX buffer not empty interrupt
+#define SPI_IRQ_Enable_ERRIE								 (uint16_t)(1<<5)			//SPI_CR2.7  :	ERROR interrupt
 
 
 enum SPI_polling_mecism {
