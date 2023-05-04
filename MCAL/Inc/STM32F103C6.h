@@ -38,6 +38,7 @@
 //Base addresses for AHB Peripherals
 // --------------------------------------------------
 #define RCC_BASE                              	0x40021000UL
+#define DMA1_BASE								0x40020000UL
 
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
@@ -191,7 +192,47 @@ typedef struct
 	volatile uint32_t TRISE    ;
 }I2C_TypeDef;
 
-
+// DMA registers
+typedef struct
+{
+	volatile uint32_t ISR  		;
+	volatile uint32_t IFCR  	;
+	volatile uint32_t CCR1  	;
+	volatile uint32_t CNDTR1  	;
+	volatile uint32_t CPAR1 	;
+	volatile uint32_t CMAR1  	;
+	volatile uint32_t RESERVED1	;
+	volatile uint32_t CCR2 		;
+	volatile uint32_t CNDTR2  	;
+	volatile uint32_t CPAR2  	;
+	volatile uint32_t CMAR2  	;
+	volatile uint32_t RESERVED2	;
+	volatile uint32_t CCR3  	;
+	volatile uint32_t CNDTR3 	;
+	volatile uint32_t CPAR3  	;
+	volatile uint32_t CMAR3  	;
+	volatile uint32_t RESERVED3	;
+	volatile uint32_t CCR4 		;
+	volatile uint32_t CNDTR4  	;
+	volatile uint32_t CPAR4 	;
+	volatile uint32_t CMAR4  	;
+	volatile uint32_t RESERVED4	;
+	volatile uint32_t CCR5  	;
+	volatile uint32_t CNDTR5    ;
+	volatile uint32_t CPAR5 	;
+	volatile uint32_t CMAR5  	;
+	volatile uint32_t RESERVED5	;
+	volatile uint32_t CCR6  	;
+	volatile uint32_t CNDTR6  	;
+	volatile uint32_t CPAR6 	;
+	volatile uint32_t CMAR6  	;
+	volatile uint32_t RESERVED6	;
+	volatile uint32_t CCR7  	;
+	volatile uint32_t CNDTR7  	;
+	volatile uint32_t CPAR7 	;
+	volatile uint32_t CMAR7  	;
+	volatile uint32_t RESERVED7	;
+}DMA_TypeDef;
 
 
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -230,6 +271,8 @@ typedef struct
 #define I2C1          ( (I2C_TypeDef *)I2C1_BASE)
 #define I2C2          ( (I2C_TypeDef *)I2C2_BASE)
 
+// DMA
+#define DMA1          ( (DMA_TypeDef *)DMA1_BASE)
 
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
@@ -272,6 +315,15 @@ typedef struct
 
 // RCC
 #define RCC_global_interrupt		  5
+
+// DMA
+#define DMA1_CH1_IRQ				  11
+#define DMA1_CH2_IRQ				  12
+#define DMA1_CH3_IRQ				  13
+#define DMA1_CH4_IRQ				  14
+#define DMA1_CH5_IRQ				  15
+#define DMA1_CH6_IRQ				  16
+#define DMA1_CH7_IRQ				  17
 
 // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 // Clock Enable Macros
@@ -322,6 +374,14 @@ typedef struct
 // I2C RCC Reset
 #define RCC_I2C1_Reset()     				(RCC->APB1RSTR |=1<<21)
 #define RCC_I2C2_Reset()     				(RCC->APB1RSTR |=1<<22)
+
+// DMA1 clock enable
+#define RCC_DMA1_CLK_EN()    				(RCC->AHBENR |=1<<0)
+// DMA1 clock Reset
+#define RCC_DMA1_Reset()    				(RCC->AHBENR &=~(1<<0))
+
+
+
 // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
 // NVIC IRQ enable and disable Macros
 // =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
@@ -385,6 +445,26 @@ typedef struct
 #define NVIC_IRQ5_RCC_global_interrupt_Enable		  (NVIC_ISER->ISER[0] |= 1<<(RCC_global_interrupt))
 //============================= Disable ===================
 #define NVIC_IRQ5_RCC_global_interrupt_Disable		  (NVIC_ICER->ICER[0] |= 1<<(RCC_global_interrupt))
+
+
+
+// DMA
+//============================= Enable ==================
+#define NVIC_IRQ11_DMA1_CH1_interrupt_Enable		  (NVIC_ISER->ISER[0] |= 1<<(DMA1_CH1_IRQ))
+#define NVIC_IRQ12_DMA1_CH2_interrupt_Enable		  (NVIC_ISER->ISER[0] |= 1<<(DMA1_CH2_IRQ))
+#define NVIC_IRQ13_DMA1_CH3_interrupt_Enable		  (NVIC_ISER->ISER[0] |= 1<<(DMA1_CH3_IRQ))
+#define NVIC_IRQ14_DMA1_CH4_interrupt_Enable		  (NVIC_ISER->ISER[0] |= 1<<(DMA1_CH4_IRQ))
+#define NVIC_IRQ15_DMA1_CH5_interrupt_Enable		  (NVIC_ISER->ISER[0] |= 1<<(DMA1_CH5_IRQ))
+#define NVIC_IRQ16_DMA1_CH6_interrupt_Enable		  (NVIC_ISER->ISER[0] |= 1<<(DMA1_CH6_IRQ))
+#define NVIC_IRQ17_DMA1_CH7_interrupt_Enable		  (NVIC_ISER->ISER[0] |= 1<<(DMA1_CH7_IRQ))
+//============================= Disable ===================
+#define NVIC_IRQ11_DMA1_CH1_interrupt_Disable		  (NVIC_ICER->ICER[0] |= 1<<(DMA1_CH1_IRQ))
+#define NVIC_IRQ12_DMA1_CH2_interrupt_Disable		  (NVIC_ICER->ICER[0] |= 1<<(DMA1_CH2_IRQ))
+#define NVIC_IRQ13_DMA1_CH3_interrupt_Disable		  (NVIC_ICER->ICER[0] |= 1<<(DMA1_CH3_IRQ))
+#define NVIC_IRQ14_DMA1_CH4_interrupt_Disable		  (NVIC_ICER->ICER[0] |= 1<<(DMA1_CH4_IRQ))
+#define NVIC_IRQ15_DMA1_CH5_interrupt_Disable		  (NVIC_ICER->ICER[0] |= 1<<(DMA1_CH5_IRQ))
+#define NVIC_IRQ16_DMA1_CH6_interrupt_Disable		  (NVIC_ICER->ICER[0] |= 1<<(DMA1_CH6_IRQ))
+#define NVIC_IRQ17_DMA1_CH7_interrupt_Disable		  (NVIC_ICER->ICER[0] |= 1<<(DMA1_CH7_IRQ))
 
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
