@@ -298,7 +298,7 @@ void MCAL_DMA1_Deinit(void)
 		{
 			NVIC_IRQ11_DMA1_CH1_interrupt_Disable	;
 		}
-		//  Clears the corresponding flag in the DMA_ISR register
+		//  Clears the corresponding flag in the DMA_IFCR register
 		DMA1->IFCR |=(0x1<<IFCR_CGIF1_Pos);
 		DMA1->IFCR |=(0x1<<IFCR_CTCIF1_Pos);
 		DMA1->IFCR |=(0x1<<IFCR_CHTIF1_Pos);
@@ -317,7 +317,7 @@ void MCAL_DMA1_Deinit(void)
 
 			NVIC_IRQ12_DMA1_CH2_interrupt_Disable	;
 		}
-		//  Clears the corresponding flag in the DMA_ISR register
+		//  Clears the corresponding flag in the DMA_IFCR register
 		DMA1->IFCR |=(0x1<<IFCR_CGIF2_Pos);
 		DMA1->IFCR |=(0x1<<IFCR_CTCIF2_Pos);
 		DMA1->IFCR |=(0x1<<IFCR_CHTIF2_Pos);
@@ -334,7 +334,7 @@ void MCAL_DMA1_Deinit(void)
 		{
 			NVIC_IRQ13_DMA1_CH3_interrupt_Disable	;
 		}
-		//  Clears the corresponding flag in the DMA_ISR register
+		//  Clears the corresponding flag in the DMA_IFCR register
 		DMA1->IFCR |=(0x1<<IFCR_CGIF3_Pos);
 		DMA1->IFCR |=(0x1<<IFCR_CTCIF3_Pos);
 		DMA1->IFCR |=(0x1<<IFCR_CHTIF3_Pos);
@@ -352,7 +352,7 @@ void MCAL_DMA1_Deinit(void)
 		{
 			NVIC_IRQ14_DMA1_CH4_interrupt_Disable	;
 		}
-		//  Clears the corresponding flag in the DMA_ISR register
+		//  Clears the corresponding flag in the DMA_IFCR register
 		DMA1->IFCR |=(0x1<<IFCR_CGIF4_Pos);
 		DMA1->IFCR |=(0x1<<IFCR_CTCIF4_Pos);
 		DMA1->IFCR |=(0x1<<IFCR_CHTIF4_Pos);
@@ -369,7 +369,7 @@ void MCAL_DMA1_Deinit(void)
 		{
 			NVIC_IRQ15_DMA1_CH5_interrupt_Disable	;
 		}
-		//  Clears the corresponding flag in the DMA_ISR register
+		//  Clears the corresponding flag in the DMA_IFCR register
 		DMA1->IFCR |=(0x1<<IFCR_CGIF5_Pos);
 		DMA1->IFCR |=(0x1<<IFCR_CTCIF5_Pos);
 		DMA1->IFCR |=(0x1<<IFCR_CHTIF5_Pos);
@@ -386,7 +386,7 @@ void MCAL_DMA1_Deinit(void)
 		{
 			NVIC_IRQ16_DMA1_CH6_interrupt_Disable	;
 		}
-		//  Clears the corresponding flag in the DMA_ISR register
+		//  Clears the corresponding flag in the DMA_IFCR register
 		DMA1->IFCR |=(0x1<<IFCR_CGIF6_Pos);
 		DMA1->IFCR |=(0x1<<IFCR_CTCIF6_Pos);
 		DMA1->IFCR |=(0x1<<IFCR_CHTIF6_Pos);
