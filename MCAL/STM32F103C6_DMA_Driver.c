@@ -296,14 +296,14 @@ void MCAL_DMA1_Deinit(void)
 	{
 		if(Interrupt_enable_NONE !=G_DMA1_Config.Interrupt_enable)
 		{
-			//  Clears the corresponding flag in the DMA_ISR register
-			DMA1->ISR &=~(0x1<<IFCR_CGIF1_Pos);
-			DMA1->ISR &=~(0x1<<IFCR_CTCIF1_Pos);
-			DMA1->ISR &=~(0x1<<IFCR_CHTIF1_Pos);
-			DMA1->ISR &=~(0x1<<IFCR_CTEIF1_Pos);
-
 			NVIC_IRQ11_DMA1_CH1_interrupt_Disable	;
 		}
+		//  Clears the corresponding flag in the DMA_ISR register
+		DMA1->IFCR |=(0x1<<IFCR_CGIF1_Pos);
+		DMA1->IFCR |=(0x1<<IFCR_CTCIF1_Pos);
+		DMA1->IFCR |=(0x1<<IFCR_CHTIF1_Pos);
+		DMA1->IFCR |=(0x1<<IFCR_CTEIF1_Pos);
+
 		DMA1->CNDTR1 = 0x00;
 		DMA1->CPAR1  = 0x00;
 		DMA1->CMAR1  = 0x00;
@@ -314,14 +314,15 @@ void MCAL_DMA1_Deinit(void)
 	{
 		if(Interrupt_enable_NONE !=G_DMA1_Config.Interrupt_enable)
 		{
-			//  Clears the corresponding flag in the DMA_ISR register
-			DMA1->ISR &=~(0x1<<IFCR_CGIF3_Pos);
-			DMA1->ISR &=~(0x1<<IFCR_CTCIF3_Pos);
-			DMA1->ISR &=~(0x1<<IFCR_CHTIF3_Pos);
-			DMA1->ISR &=~(0x1<<IFCR_CTEIF3_Pos);
 
 			NVIC_IRQ12_DMA1_CH2_interrupt_Disable	;
 		}
+		//  Clears the corresponding flag in the DMA_ISR register
+		DMA1->IFCR |=(0x1<<IFCR_CGIF2_Pos);
+		DMA1->IFCR |=(0x1<<IFCR_CTCIF2_Pos);
+		DMA1->IFCR |=(0x1<<IFCR_CHTIF2_Pos);
+		DMA1->IFCR |=(0x1<<IFCR_CTEIF2_Pos);
+
 		DMA1->CNDTR2 = 0x00;
 		DMA1->CPAR2  = 0x00;
 		DMA1->CMAR2  = 0x00;
@@ -331,14 +332,14 @@ void MCAL_DMA1_Deinit(void)
 	{
 		if(Interrupt_enable_NONE !=G_DMA1_Config.Interrupt_enable)
 		{
-			//  Clears the corresponding flag in the DMA_ISR register
-			DMA1->ISR &=~(0x1<<IFCR_CGIF3_Pos);
-			DMA1->ISR &=~(0x1<<IFCR_CTCIF3_Pos);
-			DMA1->ISR &=~(0x1<<IFCR_CHTIF3_Pos);
-			DMA1->ISR &=~(0x1<<IFCR_CTEIF3_Pos);
-
 			NVIC_IRQ13_DMA1_CH3_interrupt_Disable	;
 		}
+		//  Clears the corresponding flag in the DMA_ISR register
+		DMA1->IFCR |=(0x1<<IFCR_CGIF3_Pos);
+		DMA1->IFCR |=(0x1<<IFCR_CTCIF3_Pos);
+		DMA1->IFCR |=(0x1<<IFCR_CHTIF3_Pos);
+		DMA1->IFCR |=(0x1<<IFCR_CTEIF3_Pos);
+
 		DMA1->CNDTR3 = 0x00;
 		DMA1->CPAR3  = 0x00;
 		DMA1->CMAR3  = 0x00;
@@ -349,14 +350,14 @@ void MCAL_DMA1_Deinit(void)
 	{
 		if(Interrupt_enable_NONE !=G_DMA1_Config.Interrupt_enable)
 		{
-			//  Clears the corresponding flag in the DMA_ISR register
-			DMA1->ISR &=~(0x1<<IFCR_CGIF4_Pos);
-			DMA1->ISR &=~(0x1<<IFCR_CTCIF4_Pos);
-			DMA1->ISR &=~(0x1<<IFCR_CHTIF4_Pos);
-			DMA1->ISR &=~(0x1<<IFCR_CTEIF4_Pos);
-
 			NVIC_IRQ14_DMA1_CH4_interrupt_Disable	;
 		}
+		//  Clears the corresponding flag in the DMA_ISR register
+		DMA1->IFCR |=(0x1<<IFCR_CGIF4_Pos);
+		DMA1->IFCR |=(0x1<<IFCR_CTCIF4_Pos);
+		DMA1->IFCR |=(0x1<<IFCR_CHTIF4_Pos);
+		DMA1->IFCR |=(0x1<<IFCR_CTEIF4_Pos);
+
 		DMA1->CNDTR4 = 0x00;
 		DMA1->CPAR4  = 0x00;
 		DMA1->CMAR4  = 0x00;
@@ -366,14 +367,14 @@ void MCAL_DMA1_Deinit(void)
 	{
 		if(Interrupt_enable_NONE !=G_DMA1_Config.Interrupt_enable)
 		{
-			//  Clears the corresponding flag in the DMA_ISR register
-			DMA1->ISR &=~(0x1<<IFCR_CGIF5_Pos);
-			DMA1->ISR &=~(0x1<<IFCR_CTCIF5_Pos);
-			DMA1->ISR &=~(0x1<<IFCR_CHTIF5_Pos);
-			DMA1->ISR &=~(0x1<<IFCR_CTEIF5_Pos);
-
 			NVIC_IRQ15_DMA1_CH5_interrupt_Disable	;
 		}
+		//  Clears the corresponding flag in the DMA_ISR register
+		DMA1->IFCR |=(0x1<<IFCR_CGIF5_Pos);
+		DMA1->IFCR |=(0x1<<IFCR_CTCIF5_Pos);
+		DMA1->IFCR |=(0x1<<IFCR_CHTIF5_Pos);
+		DMA1->IFCR |=(0x1<<IFCR_CTEIF5_Pos);
+
 		DMA1->CNDTR5 = 0x00;
 		DMA1->CPAR5  = 0x00;
 		DMA1->CMAR5  = 0x00;
@@ -383,14 +384,14 @@ void MCAL_DMA1_Deinit(void)
 	{
 		if(Interrupt_enable_NONE !=G_DMA1_Config.Interrupt_enable)
 		{
-			//  Clears the corresponding flag in the DMA_ISR register
-			DMA1->ISR &=~(0x1<<IFCR_CGIF6_Pos);
-			DMA1->ISR &=~(0x1<<IFCR_CTCIF6_Pos);
-			DMA1->ISR &=~(0x1<<IFCR_CHTIF6_Pos);
-			DMA1->ISR &=~(0x1<<IFCR_CTEIF6_Pos);
-
 			NVIC_IRQ16_DMA1_CH6_interrupt_Disable	;
 		}
+		//  Clears the corresponding flag in the DMA_ISR register
+		DMA1->IFCR |=(0x1<<IFCR_CGIF6_Pos);
+		DMA1->IFCR |=(0x1<<IFCR_CTCIF6_Pos);
+		DMA1->IFCR |=(0x1<<IFCR_CHTIF6_Pos);
+		DMA1->IFCR |=(0x1<<IFCR_CTEIF6_Pos);
+
 		DMA1->CNDTR6 = 0x00;
 		DMA1->CPAR6  = 0x00;
 		DMA1->CMAR6  = 0x00;
@@ -400,14 +401,14 @@ void MCAL_DMA1_Deinit(void)
 	{
 		if(Interrupt_enable_NONE !=G_DMA1_Config.Interrupt_enable)
 		{
-			//  Clears the corresponding flag in the DMA_ISR register
-			DMA1->ISR &=~(0x1<<IFCR_CGIF7_Pos);
-			DMA1->ISR &=~(0x1<<IFCR_CTCIF7_Pos);
-			DMA1->ISR &=~(0x1<<IFCR_CHTIF7_Pos);
-			DMA1->ISR &=~(0x1<<IFCR_CTEIF7_Pos);
-
 			NVIC_IRQ17_DMA1_CH7_interrupt_Disable	;
 		}
+		//  Clears the corresponding flag in the DMA_IFCR register
+		DMA1->IFCR |=(0x1<<IFCR_CGIF7_Pos);
+		DMA1->IFCR |=(0x1<<IFCR_CTCIF7_Pos);
+		DMA1->IFCR |=(0x1<<IFCR_CHTIF7_Pos);
+		DMA1->IFCR |=(0x1<<IFCR_CTEIF7_Pos);
+
 		DMA1->CNDTR7 = 0x00;
 		DMA1->CPAR7  = 0x00;
 		DMA1->CMAR7  = 0x00;
@@ -514,12 +515,12 @@ void DMA1_Channel1_IRQHandler(void)
 	{
 		GP_DMA1_CallBack[Channel_1](source);
 	}
-	//NVIC_IRQ11_DMA1_CH1_interrupt_Disable;
-	//  Clears the corresponding flag in the DMA_ISR register
-	DMA1->IFCR |=(0x1<<IFCR_CGIF1_Pos);
-	DMA1->IFCR |=(0x1<<IFCR_CTCIF1_Pos);
-	DMA1->IFCR |=(0x1<<IFCR_CHTIF1_Pos);
-	DMA1->IFCR |=(0x1<<IFCR_CTEIF1_Pos);
+	//  Clears the corresponding flag in the DMA_IFCR register
+	if(source.GIFx )  		DMA1->IFCR |=(0x1<<IFCR_CGIF1_Pos);
+	if(source.TCIFx) 		DMA1->IFCR |=(0x1<<IFCR_CTCIF1_Pos);
+	if(source.HTIFx)		DMA1->IFCR |=(0x1<<IFCR_CHTIF1_Pos);
+	if(source.TEIFx)		DMA1->IFCR |=(0x1<<IFCR_CTEIF1_Pos);
+
 }
 void DMA_Channel2_IRQHandler(void)
 {
@@ -534,11 +535,11 @@ void DMA_Channel2_IRQHandler(void)
 		GP_DMA1_CallBack[Channel_2](source);
 	}
 
-	//  Clears the corresponding flag in the DMA_ISR register
-	DMA1->ISR &=~(0x1<<IFCR_CGIF2_Pos);
-	DMA1->ISR &=~(0x1<<IFCR_CTCIF2_Pos);
-	DMA1->ISR &=~(0x1<<IFCR_CHTIF2_Pos);
-	DMA1->ISR &=~(0x1<<IFCR_CTEIF2_Pos);
+	//  Clears the corresponding flag in the DMA_IFCR register
+	if(source.GIFx )  		DMA1->IFCR |=(0x1<<IFCR_CGIF2_Pos);
+	if(source.TCIFx) 		DMA1->IFCR |=(0x1<<IFCR_CTCIF2_Pos);
+	if(source.HTIFx)		DMA1->IFCR |=(0x1<<IFCR_CHTIF2_Pos);
+	if(source.TEIFx)		DMA1->IFCR |=(0x1<<IFCR_CTEIF2_Pos);
 }
 void DMA1_Channel3_IRQHandler(void)
 {
@@ -554,11 +555,11 @@ void DMA1_Channel3_IRQHandler(void)
 		GP_DMA1_CallBack[Channel_3](source);
 	}
 
-	//  Clears the corresponding flag in the DMA_ISR register
-	DMA1->ISR &=~(0x1<<IFCR_CGIF3_Pos);
-	DMA1->ISR &=~(0x1<<IFCR_CTCIF3_Pos);
-	DMA1->ISR &=~(0x1<<IFCR_CHTIF3_Pos);
-	DMA1->ISR &=~(0x1<<IFCR_CTEIF3_Pos);
+	//  Clears the corresponding flag in the DMA_IFCR register
+	if(source.GIFx )  		DMA1->IFCR |=(0x1<<IFCR_CGIF3_Pos);
+	if(source.TCIFx) 		DMA1->IFCR |=(0x1<<IFCR_CTCIF3_Pos);
+	if(source.HTIFx)		DMA1->IFCR |=(0x1<<IFCR_CHTIF3_Pos);
+	if(source.TEIFx)		DMA1->IFCR |=(0x1<<IFCR_CTEIF3_Pos);
 }
 void DMA1_Channel4_IRQHandler(void)
 {
@@ -573,11 +574,11 @@ void DMA1_Channel4_IRQHandler(void)
 		GP_DMA1_CallBack[Channel_4](source);
 	}
 
-	//  Clears the corresponding flag in the DMA_ISR register
-	DMA1->ISR &=~(0x1<<IFCR_CGIF4_Pos);
-	DMA1->ISR &=~(0x1<<IFCR_CTCIF4_Pos);
-	DMA1->ISR &=~(0x1<<IFCR_CHTIF4_Pos);
-	DMA1->ISR &=~(0x1<<IFCR_CTEIF4_Pos);
+	//  Clears the corresponding flag in the DMA_IFCR register
+	if(source.GIFx )  		DMA1->IFCR |=(0x1<<IFCR_CGIF4_Pos);
+	if(source.TCIFx) 		DMA1->IFCR |=(0x1<<IFCR_CTCIF4_Pos);
+	if(source.HTIFx)		DMA1->IFCR |=(0x1<<IFCR_CHTIF4_Pos);
+	if(source.TEIFx)		DMA1->IFCR |=(0x1<<IFCR_CTEIF4_Pos);
 }
 void DMA1_Channel5_IRQHandler(void)
 {
@@ -593,11 +594,11 @@ void DMA1_Channel5_IRQHandler(void)
 		GP_DMA1_CallBack[Channel_5](source);
 	}
 
-	//  Clears the corresponding flag in the DMA_ISR register
-	DMA1->ISR &=~(0x1<<IFCR_CGIF5_Pos);
-	DMA1->ISR &=~(0x1<<IFCR_CTCIF5_Pos);
-	DMA1->ISR &=~(0x1<<IFCR_CHTIF5_Pos);
-	DMA1->ISR &=~(0x1<<IFCR_CTEIF5_Pos);
+	//  Clears the corresponding flag in the DMA_IFCR register
+	if(source.GIFx )  		DMA1->IFCR |=(0x1<<IFCR_CGIF5_Pos);
+	if(source.TCIFx) 		DMA1->IFCR |=(0x1<<IFCR_CTCIF5_Pos);
+	if(source.HTIFx)		DMA1->IFCR |=(0x1<<IFCR_CHTIF5_Pos);
+	if(source.TEIFx)		DMA1->IFCR |=(0x1<<IFCR_CTEIF5_Pos);
 }
 void DMA1_Channel6_IRQHandler(void)
 {
@@ -613,11 +614,11 @@ void DMA1_Channel6_IRQHandler(void)
 		GP_DMA1_CallBack[Channel_6](source);
 	}
 
-	//  Clears the corresponding flag in the DMA_ISR register
-	DMA1->ISR &=~(0x1<<IFCR_CGIF6_Pos);
-	DMA1->ISR &=~(0x1<<IFCR_CTCIF6_Pos);
-	DMA1->ISR &=~(0x1<<IFCR_CHTIF6_Pos);
-	DMA1->ISR &=~(0x1<<IFCR_CTEIF6_Pos);
+	//  Clears the corresponding flag in the DMA_IFCR register
+	if(source.GIFx )  		DMA1->IFCR |=(0x1<<IFCR_CGIF6_Pos);
+	if(source.TCIFx) 		DMA1->IFCR |=(0x1<<IFCR_CTCIF6_Pos);
+	if(source.HTIFx)		DMA1->IFCR |=(0x1<<IFCR_CHTIF6_Pos);
+	if(source.TEIFx)		DMA1->IFCR |=(0x1<<IFCR_CTEIF6_Pos);
 }
 void DMA1_Channel7_IRQHandler(void)
 {
@@ -633,10 +634,10 @@ void DMA1_Channel7_IRQHandler(void)
 		GP_DMA1_CallBack[Channel_7](source);
 	}
 
-	//  Clears the corresponding flag in the DMA_ISR register
-	DMA1->ISR &=~(0x1<<IFCR_CGIF7_Pos);
-	DMA1->ISR &=~(0x1<<IFCR_CTCIF7_Pos);
-	DMA1->ISR &=~(0x1<<IFCR_CHTIF7_Pos);
-	DMA1->ISR &=~(0x1<<IFCR_CTEIF7_Pos);
+	//  Clears the corresponding flag in the DMA_IFCR register
+	if(source.GIFx )  		DMA1->IFCR |=(0x1<<IFCR_CGIF7_Pos);
+	if(source.TCIFx) 		DMA1->IFCR |=(0x1<<IFCR_CTCIF7_Pos);
+	if(source.HTIFx)		DMA1->IFCR |=(0x1<<IFCR_CHTIF7_Pos);
+	if(source.TEIFx)		DMA1->IFCR |=(0x1<<IFCR_CTEIF7_Pos);
 }
 
