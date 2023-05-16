@@ -106,6 +106,10 @@ void MCAL_UART_DeInit(USART_TypeDef *USARTx);
 void MCAL_UART_SendData(USART_TypeDef *USARTx,uint16_t *pTxBuffer,enum polling_mecism pollingEn);
 void MCAL_UART_ReceiveData(USART_TypeDef *USARTx,uint16_t *pRxBuffer,enum polling_mecism pollingEn);
 void MCAL_UART_WAIT_TC(USART_TypeDef *USARTx);
+void MCAL_USART_send_string(USART_TypeDef *USARTx,uint8_t *string);
+void MCAL_USART_send_number(USART_TypeDef *USARTx,uint32_t *number);
+void MCAL_USART_receive_string(USART_TypeDef *USARTx,uint8_t *buffer,uint8_t defaultStop);
+void MCAL_USART_receive_number(USART_TypeDef *USARTx,uint8_t *number,uint8_t defaultStop);
 
 // DMA
 void MCAL_USART_DMA_Init(USART_TypeDef *USARTx);

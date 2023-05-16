@@ -302,6 +302,85 @@ void MCAL_UART_ReceiveData(USART_TypeDef *USARTx,uint16_t *pRxBuffer,enum pollin
 
 
 
+
+/**================================================================
+ * @Fn		  - MCAL_USART_send_string
+ * @brief 	  - Send string
+ * @param[in] - pointer to the string
+ * @param[in] - none
+ * @retval	  - none
+ * Note		  - none
+================================================================**/
+void MCAL_USART_send_string(USART_TypeDef *USARTx,uint8_t *string)
+{
+	uint8_t i=0;
+	while(string[i] !=0)  MCAL_UART_SendData(USARTx,&string[i++],Enable);
+}
+
+/**================================================================
+ * @Fn		  - MCAL_USART_send_number
+ * @brief 	  - Send string
+ * @param[in] - pointer to the number
+ * @param[in] - none
+ * @retval	  - none
+ * Note		  - none
+================================================================**/
+void MCAL_USART_send_number(USART_TypeDef *USARTx,uint32_t *number)
+{
+	uint8_t counter=0;
+	uint8_t number_array[10];
+	while((*number) != 0)
+	{
+		number_array[counter] = ((*number)%10) +'0';
+		(*number) /=10;
+		counter ++;
+	}
+	for(int i=counter-1;i>=0;i--)
+	{
+		MCAL_UART_SendData(USARTx,&number_array[i],Enable);
+	}
+
+}
+/**================================================================
+ * @Fn		  - MCAL_USART_receive_string
+ * @brief 	  - Receive string
+ * @param[in] - pointer to the string
+ * @param[in] - defaultStop
+ * @retval	  - none
+ * Note		  - none
+================================================================**/
+void MCAL_USART_receive_string(USART_TypeDef *USARTx,uint8_t *buffer,uint8_t defaultStop)
+{
+	uint8_t i=0;
+	MCAL_UART_ReceiveData(USARTx,&buffer[i],Enable);
+	while(buffer[i] != defaultStop)
+	{
+		i++;
+		MCAL_UART_ReceiveData(USARTx,&buffer[i],Enable);
+	}
+	buffer[i] ='\0';
+}
+/**================================================================
+ * @Fn		  - MCAL_USART_receive_number
+ * @brief 	  - Receive number
+ * @param[in] - pointer to the number
+ * @param[in] - defaultStop
+ * @retval	  - none
+ * Note		  - none
+================================================================**/
+void MCAL_USART_receive_number(USART_TypeDef *USARTx,uint8_t *number,uint8_t defaultStop)
+{
+	uint32_t counter=0;
+	MCAL_UART_ReceiveData(USARTx,&number[counter],Enable);
+	while(number[counter]!=defaultStop)
+	{
+		counter ++;
+		MCAL_UART_ReceiveData(USARTx,&number[counter],Enable);
+	}
+	number[counter] = '\0';
+}
+
+
 /**===================================================================
  * @Fn				- MCAL_USART_DMA_Init
  * @brief 			- initialize UART by using DMA 
