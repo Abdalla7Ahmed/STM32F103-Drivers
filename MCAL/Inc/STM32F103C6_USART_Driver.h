@@ -13,7 +13,7 @@
 #include "STM32F103C6.h"
 #include "STM32F103C6_GPIO_Driver.h"
 #include "STM32F103C6_RCC_Driver.h"
-
+#include "STM32F103C6_DMA_Driver.h"
 
 typedef struct
 {
@@ -107,9 +107,12 @@ void MCAL_UART_SendData(USART_TypeDef *USARTx,uint16_t *pTxBuffer,enum polling_m
 void MCAL_UART_ReceiveData(USART_TypeDef *USARTx,uint16_t *pRxBuffer,enum polling_mecism pollingEn);
 void MCAL_UART_WAIT_TC(USART_TypeDef *USARTx);
 
+// DMA
+void MCAL_USART_DMA_Init(USART_TypeDef *USARTx);
+void MCAL_UART_DMA_SendData(USART_TypeDef *USARTx,uint8_t *pTxBuffer,uint16_t Number_Data_Transfer,void(* P_IRQ_DMA_CallBack)(void));
+void MCAL_UART_DMA_ReceiveData(USART_TypeDef *USARTx,uint8_t *pRxBuffer,uint16_t Number_Data_Transfer,void(* P_IRQ_DMA_CallBack)(void));
 // todo MCAL_USART_Init();         Synchronous
 // todo MCAL_USART_LIN_Init();     LIN
-// todo MCAL_USART_DMA_Init();     DMA Multi buffer communications
 
 //BaudRate Calculation
 //USARTDIV = fclk / (16 * Baudrate)
@@ -126,3 +129,6 @@ void MCAL_UART_WAIT_TC(USART_TypeDef *USARTx);
 #define UART_BRR_Register(_PCLK_, _BAUD_)					(( Mantissa (_PCLK_, _BAUD_) ) <<4 )|( (DIV_Fraction(_PCLK_, _BAUD_)) & 0xF )
 
 #endif /* INC_STM32F103C6_USART_DRIVER_H_ */
+
+
+

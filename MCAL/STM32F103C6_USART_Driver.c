@@ -15,9 +15,9 @@
 // ===================================Generic Variables =========================
 UART_Config Global_UART_Config[3]  = {0};
 
+DMA1_PinConfig_t DMA_UART_Config;
 
-
-
+UART_Config UART_DMA_Config;
 // ===========================================================================
 
 // ===================================Generic Macros =========================
@@ -158,22 +158,22 @@ void MCAL_UART_GPIO_set_pins(USART_TypeDef *USARTx)
 ======================================================================**/
 void MCAL_UART_Init(USART_TypeDef *USARTx,UART_Config *UART_Config)
 {
-	if(USARTx == USART1) 
+	if(USARTx == USART1)
 	{
 	 	RCC_USART1_CLK_EN();
 	 	Global_UART_Config[UART1_INDEX] = *UART_Config;
 	}
-	else if(USARTx == USART2) 
-	{     
+	else if(USARTx == USART2)
+	{
 	 	RCC_USART2_CLK_EN();
 	 	Global_UART_Config[UART2_INDEX] = *UART_Config;
 	}
 	else if(USARTx == USART3)
-	{        
+	{
 	 	RCC_USART3_CLK_EN();
 	 	Global_UART_Config[UART3_INDEX] = *UART_Config;
 	}
-	
+
 	uint32_t pclk,BRR;
 	// Enable the USART by writing the UE bit in USART_CR1 register to 1
 	USARTx->CR1 |=1<<13;
@@ -298,6 +298,170 @@ void MCAL_UART_ReceiveData(USART_TypeDef *USARTx,uint16_t *pRxBuffer,enum pollin
 		}
 
 	}
+}
+
+
+
+/**===================================================================
+ * @Fn				- MCAL_USART_DMA_Init
+ * @brief 			- initialize UART by using DMA 
+ * @param [in] 		- USARTx: where x can be (1..3 depending on device used)
+ * @param [in] 		- none
+ * @retval 			- none
+ * Note				- none
+======================================================================**/
+void MCAL_USART_DMA_Init(USART_TypeDef *USARTx)
+{
+
+
+	UART_DMA_Config.Baud_rate = USART_BaudRate_115200;
+	UART_DMA_Config.HWFlowCtrl = USART_FlowCtrl_NONE ;
+	UART_DMA_Config.IRQ_Enable = USART_IRQ_Enable_NONE;
+	UART_DMA_Config.P_IRQ_CallBack = NULL ;
+	UART_DMA_Config.parity =USART_Paratiy_NONE ;
+	UART_DMA_Config.PayLoad_Length = USART_Payload_Length_8B;
+	UART_DMA_Config.stopBits = USART_StopBits_ONE;
+	UART_DMA_Config.USART_Mode =USART_Mode_TX_RX ;
+	MCAL_UART_Init(USARTx,&UART_DMA_Config);
+
+}
+
+/**===================================================================
+ * @Fn				- MCAL_UART_DMA_SendData
+ * @brief 			- send the data by using DMA  
+ * @param [in] 		- USARTx: where x can be (1..3 depending on device used)
+ * @param [in] 		- pTxBuffer the address of source ,the DMA will send the data from this buffer
+ * @retval 			- Number_Data_Transfer
+ * Note				- P_IRQ_DMA_CallBack pointer to function that will be called after interrupt is happened 
+======================================================================**/
+void MCAL_UART_DMA_SendData(USART_TypeDef *USARTx,uint8_t *pTxBuffer,uint16_t Number_Data_Transfer,void(* P_IRQ_DMA_CallBack)(void))
+{
+
+
+
+	//	Bit 7 DMAT: DMA enable transmitter
+	//	This bit is set/reset by software
+	//	1: DMA mode is enabled for transmission
+	//	0: DMA mode is disabled for transmission
+	//	This bit is not available for UART5
+	USARTx->CR3 |=(1<<7);
+
+
+	// disable circular mode . when the transmission is complete , DMA is stopped
+	DMA_UART_Config.Circular_mode = Circular_mode_Disable;
+	// read from memory and then by using DMA transmit it in DR register
+	DMA_UART_Config.Data_transfer_Direction = Data_Dir_Read_from_memory;
+	// increase the size of buffer only to transmit new data every transfer
+	DMA_UART_Config.Increment = Increment_memory;
+	// enable transmit error and transmit complete interrupt
+	DMA_UART_Config.Interrupt_enable = Interrupt_enable_TCIE | Interrupt_enable_TEIE ;
+	// Disable memory to memory mode
+	DMA_UART_Config.MEM2MEM = MEM2MEM_Disable ;
+	// the number of data transfer is the number of times that DMA will transfer
+	DMA_UART_Config.Number_Data_TX = Number_Data_Transfer;
+	// set the priority high
+	DMA_UART_Config.Priority_level = Priority_level_High ;
+	// the address of buffer is the source according to DMA
+	DMA_UART_Config.Memory_Address = (uint32_t)pTxBuffer;
+	// support only 8 bit transfer
+	DMA_UART_Config.Memory_size = Memory_size_8bits ;
+	// support only 8 bit transfer
+	DMA_UART_Config.Peripheral_size = Peripheral_size_8bits ;
+	// Set the c function which will be called once the IRQ happen
+	DMA_UART_Config.P_DMA1_CallBack = (void *)P_IRQ_DMA_CallBack;
+
+	if(USARTx==USART1)
+	{
+		// the address of DR register is the destination of DMA
+		DMA_UART_Config.Peripheral_Address = (uint32_t) (USART1_BASE + 0x4 );
+		// channel 4 USART1_TX
+		DMA_UART_Config.Peripheral = Peripheral_USART1_TX;
+	}
+	else if (USARTx==USART2)
+	{
+		// the address of DR register is the destination of DMA
+		DMA_UART_Config.Peripheral_Address = (uint32_t)(USART2_BASE + 0x4 );
+		// channel 7 USART2_TX
+		DMA_UART_Config.Peripheral = Peripheral_USART2_TX;
+
+	}
+	else if (USARTx==USART3)
+	{
+		// the address of DR register is the destination of DMA
+		DMA_UART_Config.Peripheral_Address = (uint32_t) (USART3_BASE + 0x4 );
+		// channel 2 USART3_TX
+		DMA_UART_Config.Peripheral = Peripheral_USART3_TX;
+	}
+
+	MCAL_DMA1_Init(&DMA_UART_Config);
+}
+
+/**===================================================================
+ * @Fn				- MCAL_UART_DMA_ReceiveData
+ * @brief 			- receive the data by using DMA  
+ * @param [in] 		- USARTx: where x can be (1..3 depending on device used)
+ * @param [in] 		- pTxBuffer the address of destination ,the data will saved in this buffer
+ * @retval 			- Number_Data_Transfer
+ * Note				- P_IRQ_DMA_CallBack pointer to function that will be called after interrupt is happened 
+======================================================================**/
+void MCAL_UART_DMA_ReceiveData(USART_TypeDef *USARTx,uint8_t *pRxBuffer,uint16_t Number_Data_Transfer,void(* P_IRQ_DMA_CallBack)(void))
+{
+//	Bit 6 DMAR: DMA enable receiver
+//	This bit is set/reset by software
+//	1: DMA mode is enabled for reception
+//	0: DMA mode is disabled for reception
+//	This bit is not available for UART5
+	USARTx->CR3 |=(1<<6);
+
+
+	// disable circular mode . when the transmission is complete , DMA is stopped
+	DMA_UART_Config.Circular_mode = Circular_mode_Disable;
+	// read from DR register
+	DMA_UART_Config.Data_transfer_Direction = Data_Dir_Read_from_memory;
+	// increase the size of buffer only to receive new data every transfer
+	DMA_UART_Config.Increment = Increment_Peripheral;
+	// enable transmit error and transmit complete interrupt
+	DMA_UART_Config.Interrupt_enable = Interrupt_enable_TCIE | Interrupt_enable_TEIE ;
+	// Disable memory to memory mode
+	DMA_UART_Config.MEM2MEM = MEM2MEM_Disable ;
+	// the number of data transfer is the number of times that DMA will transfer
+	DMA_UART_Config.Number_Data_TX = Number_Data_Transfer;
+	// set the priority high
+	DMA_UART_Config.Priority_level = Priority_level_High ;
+	// the address of buffer is the destination according to DMA
+	DMA_UART_Config.Peripheral_Address = (uint32_t)pRxBuffer;
+	// support only 8 bit transfer
+	DMA_UART_Config.Memory_size = Memory_size_8bits ;
+	// support only 8 bit transfer
+	DMA_UART_Config.Peripheral_size = Peripheral_size_8bits ;
+	// Set the c function which will be called once the IRQ happen
+	DMA_UART_Config.P_DMA1_CallBack = (void *)P_IRQ_DMA_CallBack;
+
+	if(USARTx==USART1)
+	{
+		// the address of DR register is the source of DMA
+		DMA_UART_Config.Memory_Address = (uint32_t) (USART1_BASE + 0x4 );
+		// channel 5 USART1_RX
+		DMA_UART_Config.Peripheral = Peripheral_USART1_RX;
+	}
+	else if (USARTx==USART2)
+	{
+		// the address of DR register is the source of DMA
+		DMA_UART_Config.Memory_Address = (uint32_t)(USART2_BASE + 0x4 );
+		// channel 6 USART2_RX
+		DMA_UART_Config.Peripheral = Peripheral_USART2_RX;
+
+	}
+	else if (USARTx==USART3)
+	{
+		// the address of DR register is the source of DMA
+		DMA_UART_Config.Memory_Address = (uint32_t) (USART3_BASE + 0x4 );
+		// channel 3 USART3_RX
+		DMA_UART_Config.Peripheral = Peripheral_USART3_RX;
+	}
+
+	MCAL_DMA1_Init(&DMA_UART_Config);
+
 }
 
 
