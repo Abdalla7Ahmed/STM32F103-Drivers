@@ -291,7 +291,6 @@ void MCAL_DMA1_Init(DMA1_PinConfig_t *DMA_Config)
 void MCAL_DMA1_Deinit(void)
 {
 
-	RCC_DMA1_Reset();
 	if(Channel_1 == Get_Channel(G_DMA1_Config.Peripheral))
 	{
 		if(Interrupt_enable_NONE !=G_DMA1_Config.Interrupt_enable)
