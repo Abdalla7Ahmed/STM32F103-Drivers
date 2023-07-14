@@ -50,23 +50,23 @@ typedef struct
 // Macros configuration references
 //----------------------------------------------------------
                     //2: @ref GPIO_PINS_define
-#define GPIO_PINS_0             ((uint16_t)0x0001U) // pin 0      0b0000 0000 0000 0001
-#define GPIO_PINS_1             ((uint16_t)0x0002U) // pin 1      0b0000 0000 0000 0010
-#define GPIO_PINS_2             ((uint16_t)0x0004U) // pin 2      0b0000 0000 0000 0100
-#define GPIO_PINS_3             ((uint16_t)0x0008U) // pin 3      0b0000 0000 0000 1000
-#define GPIO_PINS_4             ((uint16_t)0x0010U) // pin 4      0b0000 0000 0001 0000
-#define GPIO_PINS_5             ((uint16_t)0x0020U) // pin 5      0b0000 0000 0010 0000
-#define GPIO_PINS_6             ((uint16_t)0x0040U) // pin 6      0b0000 0000 0100 0000
-#define GPIO_PINS_7             ((uint16_t)0x0080U) // pin 7      0b0000 0000 1000 0000
-#define GPIO_PINS_8             ((uint16_t)0x0100U) // pin 8      0b0000 0001 0000 0000
-#define GPIO_PINS_9             ((uint16_t)0x0200U) // pin 9      0b0000 0010 0000 0000
-#define GPIO_PINS_10            ((uint16_t)0x0400U) // pin 10     0b0000 0100 0000 0000
-#define GPIO_PINS_11            ((uint16_t)0x0800U) // pin 11     0b0000 1000 0000 0000
-#define GPIO_PINS_12            ((uint16_t)0x1000U) // pin 12     0b0001 0000 0000 0000
-#define GPIO_PINS_13            ((uint16_t)0x2000U) // pin 13     0b0010 0000 0000 0000
-#define GPIO_PINS_14            ((uint16_t)0x4000U) // pin 14     0b0100 0000 0000 0000
-#define GPIO_PINS_15            ((uint16_t)0x8000U) // pin 15     0b1000 0000 0000 0000
-#define GPIO_PINS_All           ((uint16_t)0xFFFFU) // all pins from 0 to 15            0b1111 1111 1111 1111
+#define GPIO_PIN_0             ((uint16_t)0x0001U) // pin 0      0b0000 0000 0000 0001
+#define GPIO_PIN_1             ((uint16_t)0x0002U) // pin 1      0b0000 0000 0000 0010
+#define GPIO_PIN_2             ((uint16_t)0x0004U) // pin 2      0b0000 0000 0000 0100
+#define GPIO_PIN_3             ((uint16_t)0x0008U) // pin 3      0b0000 0000 0000 1000
+#define GPIO_PIN_4             ((uint16_t)0x0010U) // pin 4      0b0000 0000 0001 0000
+#define GPIO_PIN_5             ((uint16_t)0x0020U) // pin 5      0b0000 0000 0010 0000
+#define GPIO_PIN_6             ((uint16_t)0x0040U) // pin 6      0b0000 0000 0100 0000
+#define GPIO_PIN_7             ((uint16_t)0x0080U) // pin 7      0b0000 0000 1000 0000
+#define GPIO_PIN_8             ((uint16_t)0x0100U) // pin 8      0b0000 0001 0000 0000
+#define GPIO_PIN_9             ((uint16_t)0x0200U) // pin 9      0b0000 0010 0000 0000
+#define GPIO_PIN_10            ((uint16_t)0x0400U) // pin 10     0b0000 0100 0000 0000
+#define GPIO_PIN_11            ((uint16_t)0x0800U) // pin 11     0b0000 1000 0000 0000
+#define GPIO_PIN_12            ((uint16_t)0x1000U) // pin 12     0b0001 0000 0000 0000
+#define GPIO_PIN_13            ((uint16_t)0x2000U) // pin 13     0b0010 0000 0000 0000
+#define GPIO_PIN_14            ((uint16_t)0x4000U) // pin 14     0b0100 0000 0000 0000
+#define GPIO_PIN_15            ((uint16_t)0x8000U) // pin 15     0b1000 0000 0000 0000
+#define GPIO_PIN_All           ((uint16_t)0xFFFFU) // all pins from 0 to 15            0b1111 1111 1111 1111
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
                      //3: @ref GPIO_MODE_define
 //0: Analog mode
